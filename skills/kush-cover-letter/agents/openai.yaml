@@ -1,0 +1,4 @@
+interface:
+  display_name: "Kush Cover Letter"
+  short_description: "Write tailored application letters"
+  default_prompt: "Use $kush-cover-letter to tailor my company-specific cover-letter.md for this job posting."

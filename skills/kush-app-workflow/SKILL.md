@@ -1,6 +1,6 @@
 ---
 name: kush-app-workflow
-description: End-to-end internship application workflow for creating company-specific application packets, tailoring resume.tex and cover-letter.md from existing templates, building and visually verifying PDFs, waiting for human approval, committing/pushing approved changes, then researching LinkedIn connections and drafting/sending approved outreach notes. Use when the user asks to apply to a company, tailor an application, build application PDFs, or run the Kush application workflow.
+description: End-to-end internship application workflow for creating company-specific application packets, coordinating kush-resume-tailor, kush-cover-letter, and humanizer when explicitly invoked, building and visually verifying PDFs, waiting for human approval, committing/pushing approved changes, then researching LinkedIn connections and drafting/sending approved outreach notes. Use when the user asks to apply to a company, tailor an application, build application PDFs, or run the Kush application workflow.
 ---
 
 # Kush App Workflow
@@ -10,6 +10,25 @@ description: End-to-end internship application workflow for creating company-spe
 Run a repeatable internship application workflow from a company/job posting through tailored PDFs, human review, commit/push, LinkedIn connection research, message drafting, and approved connection sends.
 
 This skill is procedural only. Do not assume any personal facts that are not present in the user's workspace, resume, cover letter template, `llms.txt`, or explicit prompt.
+
+## Preferred Invocation
+
+The intended full prompt explicitly loads all companion skills:
+
+```text
+Use $humanizer, $kush-resume-tailor, $kush-cover-letter, and $kush-app-workflow.
+
+Company:
+<company>
+
+Job posting:
+<paste job posting or URL>
+
+Extra notes:
+<optional>
+```
+
+If `$kush-resume-tailor` is active, use it for Step 4. If `$kush-cover-letter` is active, use it for Step 5. If `$humanizer` is active, use it only as a final prose polish for the cover letter and LinkedIn messages; do not use it to change resume facts or technical precision.
 
 ## Expected Inputs
 
@@ -77,6 +96,8 @@ Capture only facts useful for tailoring. Do not pad the resume or cover letter w
 
 Edit only the company-specific `resume.tex`.
 
+Use `$kush-resume-tailor` when it is active. If it is not active, follow the rules below directly.
+
 Make minimal, truthful ATS-focused changes:
 
 - Reorder or lightly rewrite bullets to emphasize job-relevant experience.
@@ -92,6 +113,8 @@ Never invent experience, credentials, awards, tools, employment, metrics, or edu
 
 Edit only the company-specific `cover-letter.md`.
 
+Use `$kush-cover-letter` when it is active. If it is not active, follow the rules below directly.
+
 Use the cover letter to make stronger company-specific changes:
 
 - Replace placeholders.
@@ -99,7 +122,7 @@ Use the cover letter to make stronger company-specific changes:
 - Connect the role to 2-3 strongest matching experiences.
 - Include one or two specific company/product/team details from research.
 - Keep the tone direct, human, and specific.
-- If the user explicitly invokes a humanizer skill, use it to polish the final cover letter. If no humanizer skill is active, do normal professional editing without claiming a humanizer pass.
+- If `$humanizer` is active, use it to polish the final cover letter after the factual draft is complete. If no humanizer skill is active, do normal professional editing without claiming a humanizer pass.
 
 ### 6. Build PDFs
 
@@ -199,7 +222,7 @@ Connection-note rules:
 - Mention the role/company context only if natural.
 - Do not claim a relationship, referral, or shared background that is not verified.
 - Do not ask for too much in the first note.
-- If a humanizer skill is explicitly active, use it to polish the notes.
+- If `$humanizer` is active, use it to polish the notes while preserving the 300-character limit and all factual claims.
 
 ### 12. Human Review Gate B
 

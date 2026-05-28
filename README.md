@@ -19,22 +19,36 @@ End-to-end internship application workflow:
 9. Draft outreach notes.
 10. Send notes only after explicit approval.
 
+### kush-resume-tailor
+
+Kush-specific resume tailoring for the company copy of `resume.tex`. Keeps root materials untouched, preserves factual claims, and optimizes for the target job while protecting the one-page layout.
+
+### kush-cover-letter
+
+Kush-specific cover letter drafting for the company copy of `cover-letter.md`. Uses `llms.txt`, the resume, the job posting, and company research to write a specific one-page letter.
+
 Install with:
 
 ```powershell
-npx skills add https://github.com/KushagraBharti/kush-agent-skills --skill kush-app-workflow
+npx skills add https://github.com/KushagraBharti/kush-agent-skills --skill "*"
 ```
 
 For Codex global install:
 
 ```powershell
-npx skills add https://github.com/KushagraBharti/kush-agent-skills --skill kush-app-workflow -g -a codex -y --copy
+npx skills add https://github.com/KushagraBharti/kush-agent-skills --skill "*" -g -a codex -y --copy
+```
+
+Install the humanizer skill separately if you want the full four-skill workflow:
+
+```powershell
+npx skills add https://github.com/blader/humanizer --skill humanizer
 ```
 
 Use it with a prompt like:
 
 ```text
-Use $kush-app-workflow.
+Use $humanizer, $kush-resume-tailor, $kush-cover-letter, and $kush-app-workflow.
 
 Company:
 <company>
