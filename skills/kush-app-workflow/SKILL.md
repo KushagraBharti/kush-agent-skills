@@ -78,6 +78,12 @@ Plain `lgtm` approves the application packet only; it is not approval to send ou
 3. Read `llms.txt`, root `resume.tex`, and root cover letter template.
 4. If company or role is ambiguous, ask one concise clarification before creating files.
 
+On Windows, `llms.txt` may be a symlink whose file length appears as `0`. Do not check size/length to decide whether it has content. Read it directly with:
+
+```powershell
+Get-Content -LiteralPath .\llms.txt
+```
+
 ### 2. Create Company Packet
 
 Run:
@@ -105,11 +111,12 @@ Edit only `03_Tailored_Applications/<Company>/resume.tex`.
 
 Light resume guardrails:
 
-- The resume is already full. Improve fit by rewriting, compressing, reordering, and swapping projects.
+- The resume is already full. Improve fit by rewriting, compressing, reordering, and swapping project/experience content.
 - Let the job description drive the edits; do not force predefined role buckets or fixed project matrices.
 - Build a compact ATS map: `requirement -> evidence -> edit`.
 - For internship roles, use `August 2023 -- December 2027` as the education date by default. Use `August 2023 -- May 2027` only for new-grad roles or when the user explicitly asks.
 - Add exact job keywords only when supported by `llms.txt`, root resume, company-specific resume, or user notes.
+- Do not edit the Technical Skills section unless the user explicitly asks. Tailoring should happen through Experience and Projects.
 - Preserve project links when known; never invent missing links.
 - Project headings should not include dates or status labels.
 - Keep the resume one page. If it spills, fix content before formatting.
@@ -248,18 +255,21 @@ Return each target with:
 Message rules:
 
 - Keep under 300 characters.
-- Aim for 240-300 characters when possible.
+- Aim for 270-300 characters when possible; shorter is only acceptable when a longer version becomes awkward.
 - Use straight apostrophes, not curly quotes.
-- Be straightforward and normal.
+- Be warm, specific, formal, direct, and normal.
 - Make the note naturally invite a reply or short conversation.
 - Do not make it a generic connect request.
 - Do not claim a relationship, referral, or shared background that is not verified.
-- Avoid corny phrasing, inflated admiration, and pitch-like lines.
+- Prefer `CS student` over naming UTD unless the school is a genuine conversation hook. The shorter intro leaves more room for a better personalized ask.
+- Prefer direct asks like `I want to talk with you about...` or `I'd like to talk to you about...`.
+- Avoid vague `advice` language, generic admiration, inflated praise, pitch-like lines, and `10 minutes`.
+- Do not use `would love to` unless the full phrase is formal and grammatical, such as `I would love to...`; even then, prefer the more direct ask above.
 
 Default shape:
 
 ```text
-Hi <Name>, I'm a UTD CS/Finance student applying to <Company>/<Role>. I'm trying to learn/gain experience in <field>, and I'd really appreciate your insight on <specific role/team/topic>.
+Hi <Name>, I'm a CS student applying to <Company>/<Role>. I saw <specific verified hook>. I'd like to talk to you about <specific role/team/topic that naturally continues the conversation>.
 ```
 
 ### 13. Gate B Response
@@ -298,6 +308,8 @@ Preferred in-app browser method:
 ### 15. Final Tracker Update
 
 As the final workflow step, update `Application_Tracker.xlsx` once. Upsert the current application row using only the existing columns: `Company`, `Role`, `Role Type`, `Season`, `Location`, `Posting Link`, `Status`, `Date Applied`, `LinkedIn Reachouts`, `Notes`.
+
+Use only these role type values: `Internship`, `New Grad`, `Other`.
 
 Use only these status values: `need to apply`, `applied`, `OA`, `interview`, `rejected`, `offer`.
 

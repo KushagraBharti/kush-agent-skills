@@ -45,13 +45,19 @@ Prioritize:
 
 Use this order:
 
-1. Reorder skills and bullets so the strongest fit is seen first.
+1. Rewrite and reorder bullets within experiences and projects so the strongest fit is seen first.
 2. Rewrite existing bullets to use truthful job language.
 3. Compress low-fit bullets to make room.
 4. Swap projects if another project from `llms.txt` fits materially better.
 5. Remove lower-fit content before touching formatting.
 
 Do not use font, margin, or spacing changes as the first fix for overflow. Content quality comes first.
+
+Technical Skills is a hard no-touch section unless the user explicitly asks. Do not reorder, add, remove, or tune skills for ATS. Tailoring should happen through Experience bullets and Projects.
+
+Experience chronology is a hard rule: keep the Experience section in reverse chronological order. Do not reorder jobs by relevance. Tailor the skills, bullets, projects, and emphasis instead.
+
+The resume should be one full, high-signal page. One page is not enough if the bottom third is empty. If the resume looks underfilled after trimming, add back the strongest supported content until the page is used well without spilling.
 
 ## Project Swaps
 
@@ -91,8 +97,10 @@ Do:
 - Prefer technical nouns over filler adjectives.
 - Keep metrics, titles, dates, employers, schools, and awards exact.
 - Preserve LaTeX syntax, links, commands, spacing conventions, and section structure.
+- Leave the Technical Skills section unchanged unless the user explicitly asks to edit it.
 - Keep project-heading right-side date/status arguments empty; project dates do not add value here.
 - Keep the resume to one page.
+- Use the full page well; avoid visibly underfilled resumes.
 
 Do not:
 
@@ -110,6 +118,7 @@ After edits, the workflow should:
 - Confirm page count is one.
 - Render or visually inspect the PDF.
 - Check for clipping, broken links, missing sections, and bad line wraps.
+- Check that the page is filled appropriately; if the resume wastes major vertical space, restore high-signal supported content.
 - Extract text when practical and confirm the most important job keywords are present.
 
 If using this skill standalone, state whether build/page verification still needs to run.
