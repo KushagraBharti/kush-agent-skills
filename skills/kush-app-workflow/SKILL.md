@@ -284,7 +284,7 @@ Preferred in-app browser method:
 2. Use DOM CUA to click `Add a note`.
 3. Focus `textarea[name="message"]`.
 4. Type the normalized note character-by-character with keyboard events.
-5. Do not start with Playwright `fill`, paste, or clipboard writes; these can fail when the virtual clipboard is unavailable.
+5. Do not start with generic fill, paste, or clipboard writes; these can fail when the virtual clipboard is unavailable.
 6. Read `textarea[name="message"]` with page evaluation and verify it exactly matches the approved normalized note.
 7. Click the enabled `Send invitation` button only after verification.
 
