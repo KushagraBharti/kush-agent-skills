@@ -1,98 +1,136 @@
 ---
 name: kush-cover-letter
-description: Write or revise Kushagra's company-specific cover-letter.md for a target job using the current resume, llms.txt, company research, and job posting. Use when tailoring the company folder cover-letter.md under 03_Tailored_Applications with specific company fit, truthful experience mapping, professional tone, and one-page PDF readiness.
+description: Write or revise Kushagra's company-specific cover-letter.md for a target job using the current resume, llms.txt, company research, and job posting. Use when tailoring company-folder cover-letter.md files under 03_Tailored_Applications for specific company fit, concise human voice, truthful experience mapping, application-question consistency, signature links, and one-page PDF readiness.
 ---
 
 # Kush Cover Letter
 
 ## Purpose
 
-Create a polished, specific cover letter for one company and role, using the user's real background and the company/job context.
+Create a specific, concise cover letter for one company and role. The letter should sound like Kushagra: direct, ambitious, technical, and human without sounding dramatic or generic. Use the job description, company research, current resume, and `llms.txt` with judgment instead of following a rigid formula.
 
-Use this skill inside `$kush-app-workflow` or on its own when the user asks for a cover letter. If `$humanizer` is active, use it as a final polish pass after the factual draft is complete.
+Use this skill inside `$kush-app-workflow` or on its own. If `$humanizer` is active, use it only after the factual draft is complete.
 
 ## Required Context
 
 Read:
 
-- The job posting or job URL.
-- `llms.txt` for current profile context.
+- Job posting text or URL.
+- `llms.txt` for current profile context, projects, motivation, links, and voice.
 - Root cover letter template for baseline structure only.
 - Company-specific `03_Tailored_Applications/<Company>/cover-letter.md` for edits.
 - Company/product/team research from primary sources when available.
+- Application questions, if provided, so the letter does not duplicate those answers.
 
 Hard rule: never edit the root cover letter template. Only edit the company-specific copy.
 
-## Cover Letter Goals
+## Goals
 
 The letter should:
 
-- Sound like a specific person applying to a specific role, not a generic template.
-- Connect 2-3 strongest experiences to the job requirements.
-- Include one or two concrete company details from research.
-- Be direct, warm, and confident without sounding inflated.
-- Avoid filler, buzzword stacking, and generic admiration.
-- Fit cleanly on one PDF page after build.
+- Connect 2-3 strongest experiences to the role.
+- Use one or two concrete company/team/product details.
+- Show motivation and work ethic through evidence, not self-labels.
+- Stay brief while still having substance.
+- Fit cleanly on one PDF page.
+
+Target length: usually 350-450 words, shorter if the rendered PDF needs it.
+
+## Voice
+
+Use:
+
+- Straightforward, specific sentences.
+- Short paragraphs with one clear point each.
+- Concrete examples over abstract claims.
+- Confident but normal language.
+
+Avoid:
+
+- Corny lines, grand mission language, and over-polished corporate tone.
+- Generic admiration such as "I am inspired by your commitment to innovation."
+- Repeating company values as slogans.
+- Saying "hardworking" directly when an example can prove it.
+
+When using company values, translate them into behavior:
+
+```text
+Value -> what the team seems to reward -> concrete evidence from Kushagra's work
+```
 
 ## Structure
 
-Use this default shape unless the role calls for something different:
+Default shape:
 
 ```text
 Date / recipient block
 
-Opening: role, company, and a specific reason this role makes sense.
+Opening: role, company, and the clearest reason this role fits.
 
-Experience paragraph 1: strongest technical/project match.
+Technical fit: strongest project, internship, or research match.
 
-Experience paragraph 2: second match, preferably with product/research/systems judgment.
+Second fit: another relevant system/product/research/trading example.
 
-Company fit paragraph: concrete company/team/product reason and how the user's background connects.
+Company fit: specific team/company reason and how Kushagra would contribute.
 
-Close: concise interest and next step.
+Close: concise interest.
 
-Signature/contact block
+Signature block
 ```
+
+Do not force all sections if a shorter letter is stronger.
+
+## Signature
+
+Use this default signature unless the user asks otherwise:
+
+```markdown
+Sincerely,
+Kushagra Bharti
+Student | B.S. Computer Science
+The University of Texas at Dallas
+[LinkedIn](https://www.linkedin.com/in/kushagra-bharti/) | [Personal Site](https://www.kushagrabharti.com) | [GitHub](https://github.com/KushagraBharti/)
+```
+
+In the actual `cover-letter.md`, keep signature lines consecutive with no blank lines inside the signature block. Use Markdown links instead of raw long URLs when supported by the renderer. Verify the rendered PDF does not wrap the signature awkwardly.
 
 ## Writing Rules
 
 Do:
 
-- Replace all placeholders.
-- Remove tailoring checklists and template notes.
+- Replace all placeholders and template notes.
 - Use exact role and company names.
-- Match the job's strongest requirements to real projects, internships, research, and skills.
+- Match the job's strongest requirements to real work.
 - Keep claims verifiable from `llms.txt`, resume, or user-provided context.
-- Use active, human wording.
-- Keep it one page.
+- Keep the letter distinct from application-question answers.
+- Before finalizing, make sure each paragraph answers either "why this role/company" or "why this evidence matters."
+- Tighten aggressively if it spills to a second page.
 
 Do not:
 
-- Invent personal connections, referrals, company facts, metrics, or experience.
-- Mention a company value/product unless it was researched or provided.
-- Repeat the resume mechanically.
-- Over-apologize for being a student or intern candidate.
+- Invent company facts, referrals, personal connections, experience, metrics, or links.
+- Mention values/products unless researched or user-provided.
+- Apologize for being a student or intern candidate.
 - Use generic openings like "I am writing to apply" when a sharper opening is possible.
-- Send or submit anything; only write the file and return control to the workflow.
+- Submit or send anything.
 
-## Humanizer Use
+## Humanizer Pass
 
-If `$humanizer` is explicitly active:
+If `$humanizer` is active:
 
-1. Draft the letter factually first.
-2. Run the final prose through the humanizer skill conceptually.
-3. Preserve all factual claims, dates, company names, and technical terms.
-4. Keep the result concise enough for one page.
+1. Draft factually first.
+2. Remove inflated wording, filler transitions, cliches, and AI-ish rhythm.
+3. Preserve company names, dates, metrics, technical terms, and links.
+4. Keep the final letter one-page ready.
 
-If `$humanizer` is not active, perform normal professional editing without claiming a humanizer pass.
+## Output
 
-## Output Expectations
+Summarize:
 
-When finished, summarize:
-
-- Company-specific details used.
+- Company details used.
 - Experiences emphasized.
-- Any assumptions or facts the user should verify.
-- Whether the cover letter still needs build/page verification.
+- Any assumptions the user should verify.
+- Signature/link handling.
+- Build/page verification status.
 
-If used inside `$kush-app-workflow`, return control to that workflow so it can build and verify PDFs.
+If used inside `$kush-app-workflow`, return control so it can build, verify, and present Gate A.

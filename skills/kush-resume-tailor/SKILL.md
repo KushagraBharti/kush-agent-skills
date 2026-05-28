@@ -1,90 +1,125 @@
 ---
 name: kush-resume-tailor
-description: Tailor Kushagra's company-specific LaTeX resume for a job posting while preserving truth, one-page layout, and the root resume template. Use when optimizing the company folder resume.tex under 03_Tailored_Applications for ATS alignment, role-specific emphasis, keyword coverage, and concise resume edits inside the application workflow.
+description: Tailor Kushagra's company-specific LaTeX resume for a job posting while preserving truth, one-page layout, links, and the root resume template. Use when optimizing company-folder resume.tex files under 03_Tailored_Applications for ATS alignment, project swaps from llms.txt, role-specific keyword coverage, and concise resume edits inside the application workflow.
 ---
 
 # Kush Resume Tailor
 
 ## Purpose
 
-Optimize the company-specific `resume.tex` for one target job while preserving the user's actual experience, writing style, and one-page resume constraint.
+Optimize the company-specific `resume.tex` for one target job. Treat the resume as already full: every improvement should come from rewriting, reordering, compressing, or swapping content, not from adding net length. Use judgment from the job description and `llms.txt`; do not force predefined role buckets or fixed project matrices.
 
-Use this skill inside `$kush-app-workflow` or on its own when the user asks for resume tailoring. If `$humanizer` is active, do not use it on the resume unless the user explicitly asks; resume bullets should stay precise and compact.
+Use this skill inside `$kush-app-workflow` or on its own. If `$humanizer` is active, do not use it on the resume unless the user explicitly asks; resume bullets should stay precise and compact.
 
 ## Required Context
 
 Read:
 
-- The job posting or job URL.
-- `llms.txt` for current profile context.
+- Job posting text or URL.
+- `llms.txt` for current profile context, project inventory, metrics, links, and voice.
 - Root `resume.tex` for baseline context only.
 - Company-specific `03_Tailored_Applications/<Company>/resume.tex` for edits.
 
 Hard rule: never edit root `resume.tex`. Only edit the company-specific copy.
 
-## Tailoring Process
+## ATS Map
 
-1. Identify the target role type: SWE, AI/ML, full-stack, backend, data, research, finance/quant, product-adjacent, or other.
-2. Extract the job's real requirements: technologies, responsibilities, seniority signals, domain, and soft skills.
-3. Map requirements to existing evidence in `llms.txt` and the resume.
-4. Edit the company-specific LaTeX resume with the smallest changes that materially improve fit.
-5. Preserve one-page layout and compile-readiness.
+Before editing, build an internal map:
+
+```text
+Requirement / keyword -> Evidence from resume or llms.txt -> Resume edit
+```
+
+Use this map to decide what to change. Do not add unsupported terms. If a requirement is important but unsupported, note it in the final summary instead of inventing evidence.
+
+Prioritize:
+
+1. Required languages, frameworks, tools, and domains.
+2. Core responsibilities and role nouns.
+3. Evidence of impact: metrics, shipped systems, research results, tests, users, production context.
+4. Soft requirements only when they can be shown through concrete work.
+
+## Edit Strategy
+
+Use this order:
+
+1. Reorder skills and bullets so the strongest fit is seen first.
+2. Rewrite existing bullets to use truthful job language.
+3. Compress low-fit bullets to make room.
+4. Swap projects if another project from `llms.txt` fits materially better.
+5. Remove lower-fit content before touching formatting.
+
+Do not use font, margin, or spacing changes as the first fix for overflow. Content quality comes first.
+
+## Project Swaps
+
+When the current projects do not fit the role, choose replacements from `llms.txt`.
+
+Rank projects by:
+
+- Direct match to the role's domain and technologies.
+- Concrete metrics or outcomes.
+- Technical depth.
+- Recency and credibility.
+- Availability of a real link.
+
+Rules:
+
+- Replace a lower-fit project; do not append a third project unless a shorter layout already supports it.
+- Preserve existing LaTeX link patterns when adding a linked project.
+- Use project links only when present in `llms.txt`, root resume, or user input.
+- If the best project lacks a known link, include the project without inventing a URL and flag the missing link in the summary.
+- Trust the strongest evidence for the specific posting; do not mechanically pick projects from a preset category list.
+
+## Bullet Standard
+
+Prefer this shape:
+
+```text
+Action + technical work + concrete outcome/scale + tool/system/context
+```
+
+Good bullets are specific enough to be credible and compact enough to fit. Do not force a metric where none exists; a real technical detail is better than a fake number.
 
 ## Editing Rules
 
 Do:
 
-- Reorder bullets or skill terms when the role clearly prioritizes them.
-- Swap weak verbs for concrete technical verbs.
-- Add exact job keywords only when supported by existing experience.
-- Emphasize the most relevant projects and experiences.
-- Keep metrics, tools, systems, and outcomes specific.
-- Prefer tight bullet edits over new sections.
-- Preserve LaTeX syntax, links, commands, spacing, and section structure.
+- Use exact job keywords when supported by Kushagra's actual work.
+- Prefer technical nouns over filler adjectives.
+- Keep metrics, titles, dates, employers, schools, and awards exact.
+- Preserve LaTeX syntax, links, commands, spacing conventions, and section structure.
+- Keep the resume to one page.
 
 Do not:
 
 - Invent experience, metrics, titles, dates, tools, awards, publications, GPA, certifications, or company names.
 - Edit the root resume template.
 - Add generic ATS stuffing.
-- Add claims that only appear in the job description but not in the user's materials.
-- Make broad style rewrites when a targeted keyword or bullet edit would work.
-- Expand the resume beyond one page.
+- Add claims that appear only in the job description.
+- Expand the resume beyond one page. If it spills, compress, swap, or remove lower-fit content.
 
-## ATS Guidance
+## Verification
 
-Prefer exact terms from the job posting when truthful:
+After edits, the workflow should:
 
-- Languages and frameworks.
-- Cloud/database/tool names.
-- ML/AI systems, data pipelines, evaluation, full-stack, backend, distributed systems, APIs, automation, testing, deployment, observability.
-- Role nouns such as intern, software engineer, machine learning, research, product engineering, infrastructure.
+- Build the PDF.
+- Confirm page count is one.
+- Render or visually inspect the PDF.
+- Check for clipping, broken links, missing sections, and bad line wraps.
+- Extract text when practical and confirm the most important job keywords are present.
 
-Include both acronym and expanded form only when space allows and it is useful, for example `LLM` and `large language model`.
+If using this skill standalone, state whether build/page verification still needs to run.
 
-## Bullet Standard
+## Output
 
-Strong bullets should usually follow:
-
-```text
-Action + technical work + concrete outcome/scale + tool/system/context
-```
-
-Example shape:
-
-```text
-Built <system/pipeline> using <tools> to <measurable/resulting impact>.
-```
-
-Do not force metrics where none exist. A truthful technical detail is better than a fake number.
-
-## Output Expectations
-
-When finished, summarize:
+Summarize:
 
 - Key resume changes.
-- Job keywords added or emphasized.
-- Any important requirement not supported by the current materials.
-- Whether the resume still needs build/page verification.
+- Keywords added or emphasized.
+- Compact ATS coverage: covered, partially covered, and unsupported requirements.
+- Project swaps and link assumptions.
+- Important unsupported requirements.
+- Build/page verification status.
 
-If used inside `$kush-app-workflow`, return control to that workflow so it can build and verify PDFs.
+If used inside `$kush-app-workflow`, return control so it can build, verify, and present Gate A.

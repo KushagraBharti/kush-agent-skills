@@ -1,19 +1,17 @@
 ---
 name: kush-app-workflow
-description: End-to-end internship application workflow for creating company-specific application packets, coordinating kush-resume-tailor, kush-cover-letter, and humanizer when explicitly invoked, building and visually verifying PDFs, waiting for human approval, committing/pushing approved changes, then researching LinkedIn connections and drafting/sending approved outreach notes. Use when the user asks to apply to a company, tailor an application, build application PDFs, or run the Kush application workflow.
+description: End-to-end internship application workflow for Kushagra that creates company-specific packets, coordinates kush-resume-tailor, kush-cover-letter, and humanizer, answers application writing prompts, builds and visually verifies one-page PDFs, waits for human approval, commits and pushes approved packets, then researches LinkedIn targets, drafts high-quality outreach, and sends only after explicit LGTM SEND approval.
 ---
 
 # Kush App Workflow
 
 ## Purpose
 
-Run a repeatable internship application workflow from a company/job posting through tailored PDFs, human review, commit/push, LinkedIn connection research, message drafting, and approved connection sends.
+Run the full internship application loop from job posting to approved PDFs, written application answers, Git commit/push, LinkedIn target research, outreach draft review, and approved connection sends.
 
-This skill is procedural only. Do not assume any personal facts that are not present in the user's workspace, resume, cover letter template, `llms.txt`, or explicit prompt.
+This skill is procedural. Do not assume personal facts outside the workspace, `llms.txt`, resume, cover letter template, job posting, company research, or explicit user notes.
 
 ## Preferred Invocation
-
-The intended full prompt explicitly loads all companion skills:
 
 ```text
 Use $humanizer, $kush-resume-tailor, $kush-cover-letter, and $kush-app-workflow.
@@ -24,25 +22,18 @@ Company:
 Job posting:
 <paste job posting or URL>
 
+Application questions:
+<optional writing prompts, limits, or application text boxes>
+
 Extra notes:
-<optional>
+<optional positioning, tone, referral context, constraints>
 ```
 
-If `$kush-resume-tailor` is active, use it for Step 4. If `$kush-cover-letter` is active, use it for Step 5. If `$humanizer` is active, use it only as a final prose polish for the cover letter and LinkedIn messages; do not use it to change resume facts or technical precision.
+When all four skills are invoked, keep using all four throughout the workflow: `$kush-app-workflow` owns sequencing and approval gates, `$kush-resume-tailor` owns resume judgment, `$kush-cover-letter` owns letter judgment, and `$humanizer` owns final prose cleanup for the cover letter, application-question answers, and LinkedIn messages. Do not use `$humanizer` to blur resume facts or technical precision.
 
-## Expected Inputs
+## Workspace Contract
 
-Accept:
-
-- Company name, if provided.
-- Exact job posting text or URL.
-- Optional user notes about positioning, tone, target team, referral context, or constraints.
-
-If the company name is missing, infer it from the job posting only when unambiguous. If the role or company is ambiguous, ask one short clarification before creating files.
-
-## Workspace Assumptions
-
-Run from the user's application-materials repository. Prefer discovering paths from the current working directory, but the workflow expects:
+Expected files:
 
 ```text
 llms.txt
@@ -53,23 +44,37 @@ build-application.cmd
 03_Tailored_Applications/
 ```
 
-Hard rule: never edit the root `resume.tex` or root cover letter template. Only edit the company-specific copies inside:
+Hard rules:
+
+- Never edit root `resume.tex`.
+- Never edit the root cover letter template.
+- Only tailor `03_Tailored_Applications/<Company>/resume.tex` and `cover-letter.md`.
+- Put written application answers in `03_Tailored_Applications/<Company>/application-questions.md`.
+- Do not create extra reference files unless the user asks or the workflow output requires them.
+- If root files change unexpectedly, stop and report before committing.
+
+## Approval Gates
+
+Gate A: resume PDF, cover-letter PDF, and application-question answers are complete. Stop for user feedback or `lgtm`.
+
+Gate B: LinkedIn targets and notes are drafted. Stop for feedback or explicit send approval.
+
+Sending LinkedIn requests requires exactly:
 
 ```text
-03_Tailored_Applications/<Company>/resume.tex
-03_Tailored_Applications/<Company>/cover-letter.md
+LGTM SEND
 ```
 
-If root files change unexpectedly, stop and report before committing.
+Plain `lgtm` approves the application packet only; it is not approval to send outreach.
 
 ## Workflow
 
 ### 1. Intake
 
-1. Read the user prompt.
-2. Identify company, role, job posting source, and any user-provided positioning notes.
-3. Inspect the repo layout and confirm the required scripts exist.
-4. Read `llms.txt`, root `resume.tex`, and the root cover letter template for context.
+1. Identify company, role, job URL/source, application questions, writing limits, and user notes.
+2. Inspect the repo layout and confirm required scripts exist.
+3. Read `llms.txt`, root `resume.tex`, and root cover letter template.
+4. If company or role is ambiguous, ask one concise clarification before creating files.
 
 ### 2. Create Company Packet
 
@@ -79,52 +84,73 @@ Run:
 .\new-tailored-application.cmd "<Company>"
 ```
 
-If the company folder already exists, do not use `-Force` unless the user explicitly asks. Inspect existing company files and continue from them.
+If the company folder already exists, inspect it and continue. Do not use `-Force` unless the user explicitly asks.
 
 ### 3. Research
 
-Research the company and job posting online when the posting URL or company is current, niche, or externally verifiable. Prefer primary sources:
+Research current company/job facts when a URL, company, or role is externally verifiable. Prefer:
 
 - Job posting page.
 - Company careers page.
-- Company product/engineering/blog pages.
+- Company product, engineering, blog, docs, or about pages.
 - LinkedIn company page only for outreach research.
 
-Capture only facts useful for tailoring. Do not pad the resume or cover letter with vague company praise.
+Capture only facts that improve tailoring. Avoid padding the resume or cover letter with vague praise.
 
 ### 4. Tailor Resume
 
-Edit only the company-specific `resume.tex`.
+Edit only `03_Tailored_Applications/<Company>/resume.tex`.
 
-Use `$kush-resume-tailor` when it is active. If it is not active, follow the rules below directly.
+Light resume guardrails:
 
-Make minimal, truthful ATS-focused changes:
+- The resume is already full. Improve fit by rewriting, compressing, reordering, and swapping projects.
+- Let the job description drive the edits; do not force predefined role buckets or fixed project matrices.
+- Build a compact ATS map: `requirement -> evidence -> edit`.
+- Add exact job keywords only when supported by `llms.txt`, root resume, company-specific resume, or user notes.
+- Preserve project links when known; never invent missing links.
+- Keep the resume one page. If it spills, fix content before formatting.
 
-- Reorder or lightly rewrite bullets to emphasize job-relevant experience.
-- Add job keywords only when supported by existing experience.
-- Prefer concrete skills, systems, metrics, tools, and outcomes.
-- Preserve all factual claims, dates, titles, schools, roles, and metrics unless the source materials support the change.
-- Keep the resume to one page.
-- Avoid broad rewrites that change the user's voice or positioning without a reason.
-
-Never invent experience, credentials, awards, tools, employment, metrics, or education.
+Use `$kush-resume-tailor` when active; otherwise follow these rules directly.
 
 ### 5. Tailor Cover Letter
 
-Edit only the company-specific `cover-letter.md`.
+Edit only `03_Tailored_Applications/<Company>/cover-letter.md`.
 
-Use `$kush-cover-letter` when it is active. If it is not active, follow the rules below directly.
+Light cover-letter guardrails:
 
-Use the cover letter to make stronger company-specific changes:
+- Be brief, specific, and human. Let personality show without sounding corny.
+- Connect 2-3 strongest experiences to the role.
+- Mention one or two researched company/team/product details.
+- Show work ethic and company-values fit through examples, not slogans.
+- Keep it one page.
 
-- Replace placeholders.
-- Remove checklist/template-only sections.
-- Connect the role to 2-3 strongest matching experiences.
-- Include one or two specific company/product/team details from research.
-- Keep the tone direct, human, and specific.
-- If `$humanizer` is active, use it to polish the final cover letter after the factual draft is complete. If no humanizer skill is active, do normal professional editing without claiming a humanizer pass.
+Use this default signature unless the user asks otherwise:
 
-### 6. Build PDFs
+```markdown
+Sincerely,
+Kushagra Bharti
+Student | B.S. Computer Science
+The University of Texas at Dallas
+[LinkedIn](https://www.linkedin.com/in/kushagra-bharti/) | [Personal Site](https://www.kushagrabharti.com) | [GitHub](https://github.com/KushagraBharti/)
+```
+
+In the actual `cover-letter.md`, keep signature lines consecutive with no blank lines inside the signature block, and verify the PDF signature renders cleanly.
+
+Use `$kush-cover-letter` when active; otherwise follow these rules directly.
+
+### 6. Answer Application Questions
+
+If writing prompts are provided:
+
+1. Create or update `03_Tailored_Applications/<Company>/application-questions.md`.
+2. Include each prompt, any limit, and a paste-ready answer.
+3. Draft after resume and cover letter edits so positioning is consistent.
+4. Answer directly and truthfully in Kushagra's voice.
+5. Use the answer to address the exact prompt, not to repeat the cover letter.
+6. Respect word/character limits. When a limit matters, include a quick count or note for the user.
+7. Keep structure flexible; use only enough organization to make the answer clear and easy to paste.
+
+### 7. Build
 
 Run:
 
@@ -132,125 +158,136 @@ Run:
 .\build-application.cmd "<Company>" -Clean
 ```
 
-The expected outputs are:
+Expected outputs:
 
 ```text
 03_Tailored_Applications/<Company>/Kushagra Bharti Resume - <Company>.pdf
 03_Tailored_Applications/<Company>/Kushagra Bharti Cover Letter - <Company>.pdf
 ```
 
-If the build fails, inspect the LaTeX/Markdown error, fix the company-specific source, and rebuild.
+If the build fails, inspect the LaTeX/Markdown error, fix only company-specific sources, and rebuild.
 
-### 7. Verify PDFs
+### 8. Verify
 
-Verify both PDFs before asking for feedback:
+Verify before Gate A:
 
-- Confirm each file exists.
-- Confirm the resume is one page.
-- Confirm the cover letter is one page unless the user explicitly wants longer.
-- Render or visually inspect the PDFs when the environment supports it.
-- Check for obvious layout failures: clipped text, blank pages, broken links, placeholder text, checklist text, overlapping content, or incorrect company/role names.
+- Both PDFs exist.
+- Resume is one page.
+- Cover letter is one page unless the user explicitly wanted longer.
+- Render or visually inspect both PDFs.
+- Check for clipped text, blank pages, broken links, awkward signature wrapping, placeholder text, checklist text, overlap, wrong company, or wrong role.
+- If practical, extract PDF text and confirm key ATS terms survived.
+- If `application-questions.md` exists, confirm each prompt has an answer and no placeholders remain.
 
-If visual inspection is not possible, say so clearly and still perform file/page-count checks.
+If visual inspection is not possible, say so clearly and still do file/page checks.
 
-### 8. Human Review Gate A
+### 9. Gate A Response
 
 Stop and return:
 
-- Summary of what changed.
-- Paths to the generated PDFs.
-- Any known risks or unresolved assumptions.
-- Ask the user to provide feedback or say `lgtm`.
+- Resume/cover-letter PDF paths.
+- Brief summary of resume changes and cover-letter positioning.
+- Compact ATS coverage: covered, partially covered, and unsupported requirements.
+- Application-question answers, if any.
+- Unsupported requirements or assumptions.
+- Verification status.
+- Ask for feedback or `lgtm`.
 
-Do not commit, push, research LinkedIn people, or send anything before this approval.
+Do not commit, push, research LinkedIn people, or send anything before Gate A approval.
 
-If the user gives feedback, incorporate it and repeat steps 4-8.
+If the user gives feedback, incorporate it and repeat steps 4-9.
 
-If the user says `lgtm`, continue to commit and push.
+### 10. Commit And Push
 
-### 9. Commit And Push
-
-Before committing:
+After Gate A `lgtm`:
 
 1. Run `git status`.
-2. Confirm root `resume.tex` and root cover letter template were not edited.
-3. If the application repo has a GitHub remote, verify visibility before pushing when possible. If the repo appears public and contains private application materials, stop and ask.
-
-Commit only relevant application packet changes. Use a clear message:
+2. Confirm root resume/template were not edited.
+3. Verify GitHub remote visibility when possible. If a public repo appears to contain private application materials, stop and ask.
+4. Stage only relevant application packet changes.
+5. Commit with:
 
 ```text
 Tailor application for <Company>
 ```
 
-Push after a successful commit.
+6. Push the current branch.
 
-### 10. LinkedIn Research
+### 11. LinkedIn Target Research
 
-After the application packet is approved and pushed, use browser automation only if available and the user is already logged in.
+After commit/push, use browser automation only if the user is already logged in. Do not bypass captchas, login challenges, anti-automation prompts, rate limits, or access restrictions.
 
-Do not bypass captchas, login challenges, anti-automation prompts, rate limits, or access restrictions. If LinkedIn blocks or challenges the session, stop and ask the user to take over.
+Find 5 high-quality targets. Optimize for conversation quality, not the easiest visible Connect buttons.
 
-Research:
+Target mix:
 
-1. Open LinkedIn.
-2. Search for the company page.
-3. Go to People.
-4. Identify 5 strong connection targets.
+- 2 technical targets: engineers, managers, interns, or adjacent team members.
+- 2 hiring targets: recruiters, hiring managers, talent partners, university recruiters, or clear people-team contacts.
+- 1 free highest-ROI target with no extra restriction.
 
-Prioritize:
+If the ideal mix is unavailable, choose the strongest substitutes and explain the gap.
 
-- University alumni.
-- Recruiters or university recruiters.
-- Engineers or managers near the target role/team.
-- Mutual connections.
-- People with recent activity or a plausible reason to connect.
+Use a light scorecard while choosing: relevance to the role/team, natural conversation hook, sendability, and risk of wasting the request. Inspect profiles before choosing when possible. Prefer people whose background gives a natural reason to ask for insight.
 
-### 11. Draft Outreach
+### 12. Draft Outreach
 
-For each of 5 people, return:
+Return each target with:
 
 - Name.
 - Role/headline.
-- LinkedIn profile URL.
-- Why this person was selected.
-- A personalized connection note under 300 characters.
+- Profile URL.
+- Target type.
+- Why selected.
+- Connection note and character count.
 
-Connection-note rules:
+Message rules:
 
-- Keep each note under 300 characters.
-- Be specific and low-pressure.
-- Mention the role/company context only if natural.
+- Keep under 300 characters.
+- Aim for 240-300 characters when possible.
+- Use straight apostrophes, not curly quotes.
+- Be straightforward and normal.
+- Make the note naturally invite a reply or short conversation.
+- Do not make it a generic connect request.
 - Do not claim a relationship, referral, or shared background that is not verified.
-- Do not ask for too much in the first note.
-- If `$humanizer` is active, use it to polish the notes while preserving the 300-character limit and all factual claims.
+- Avoid corny phrasing, inflated admiration, and pitch-like lines.
 
-### 12. Human Review Gate B
+Default shape:
 
-Stop and ask the user for feedback or explicit send approval.
+```text
+Hi <Name>, I'm a UTD CS/Finance student applying to <Company>/<Role>. I'm trying to learn/gain experience in <field>, and I'd really appreciate your insight on <specific role/team/topic>.
+```
 
-If the user gives feedback, revise only the outreach messages and return them again.
+### 13. Gate B Response
 
-Do not send connection requests unless the user explicitly says:
+Stop after drafting outreach. Ask for feedback or explicit send approval.
+
+If the user gives feedback, revise only targets/messages unless they ask for broader changes.
+
+Do not send connection requests unless the user says exactly:
 
 ```text
 LGTM SEND
 ```
 
-Plain `lgtm` is not enough for sending LinkedIn requests.
-
-### 13. Send Approved Connection Requests
+### 14. Send Approved Connection Requests
 
 Only after `LGTM SEND`:
 
-1. Use browser automation to open each profile.
-2. Send a connection request with the approved note.
-3. Do not change the note without asking.
-4. Stop if LinkedIn blocks, rate-limits, or shows unexpected prompts.
-5. Report which requests were sent and which were not.
+1. Send only the approved notes.
+2. Do not change the notes except replacing unsupported punctuation with typeable equivalents.
+3. Stop if LinkedIn blocks, rate-limits, challenges, rejects the approved under-300-character note, or shows an unexpected prompt.
+4. Report sent, skipped, and blocked requests.
+
+Preferred in-app browser method:
+
+1. Open `https://www.linkedin.com/preload/custom-invite/?vanityName=<profile-vanity>`.
+2. Use DOM CUA to click `Add a note`.
+3. Focus `textarea[name="message"]`.
+4. Type the normalized note character-by-character with keyboard events.
+5. Do not start with Playwright `fill`, paste, or clipboard writes; these can fail when the virtual clipboard is unavailable.
+6. Read `textarea[name="message"]` with page evaluation and verify it exactly matches the approved normalized note.
+7. Click the enabled `Send invitation` button only after verification.
 
 ## Completion
 
-The workflow is complete only after either:
-
-- The tailored application packet has been built, verified, and returned for review; or
-- The user has approved the packet, changes have been committed/pushed, LinkedIn targets/messages have been reviewed, and explicitly approved connection requests have been sent.
+The workflow is complete when the user-approved application packet is built, verified, committed/pushed, outreach targets/messages have passed Gate B, and approved sends have either completed or been reported as blocked/skipped.

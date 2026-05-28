@@ -1,4 +1,4 @@
 interface:
   display_name: "Kush Resume Tailor"
-  short_description: "Tailor Kushagra's LaTeX resume"
-  default_prompt: "Use $kush-resume-tailor to tailor my company-specific resume.tex for this job posting."
+  short_description: "ATS-tailor Kushagra's resume"
+  default_prompt: "Use $kush-resume-tailor to ATS-tailor my company-specific resume.tex for this job posting while keeping it truthful, linked, and one page."
