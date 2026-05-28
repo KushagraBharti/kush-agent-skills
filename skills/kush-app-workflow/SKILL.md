@@ -106,8 +106,10 @@ Light resume guardrails:
 - The resume is already full. Improve fit by rewriting, compressing, reordering, and swapping projects.
 - Let the job description drive the edits; do not force predefined role buckets or fixed project matrices.
 - Build a compact ATS map: `requirement -> evidence -> edit`.
+- For internship roles, use `August 2023 -- December 2027` as the education date by default. Use `August 2023 -- May 2027` only for new-grad roles or when the user explicitly asks.
 - Add exact job keywords only when supported by `llms.txt`, root resume, company-specific resume, or user notes.
 - Preserve project links when known; never invent missing links.
+- Project headings should not include dates or status labels.
 - Keep the resume one page. If it spills, fix content before formatting.
 
 Use `$kush-resume-tailor` when active; otherwise follow these rules directly.
@@ -118,6 +120,7 @@ Edit only `03_Tailored_Applications/<Company>/cover-letter.md`.
 
 Light cover-letter guardrails:
 
+- Start from the company-specific copy of the root cover-letter template and preserve its basic shape unless the user asks otherwise.
 - Be brief, specific, and human. Let personality show without sounding corny.
 - Connect 2-3 strongest experiences to the role.
 - Mention one or two researched company/team/product details.
@@ -275,18 +278,20 @@ Only after `LGTM SEND`:
 
 1. Send only the approved notes.
 2. Do not change the notes except replacing unsupported punctuation with typeable equivalents.
-3. Stop if LinkedIn blocks, rate-limits, challenges, rejects the approved under-300-character note, or shows an unexpected prompt.
-4. Report sent, skipped, and blocked requests.
+3. Send one person at a time; do not batch multiple invite sends.
+4. Never click any path that says or implies sending without a note.
+5. Stop if LinkedIn blocks, rate-limits, challenges, rejects the approved under-300-character note, or shows an unexpected prompt.
+6. Report sent, skipped, and blocked requests.
 
 Preferred in-app browser method:
 
 1. Open `https://www.linkedin.com/preload/custom-invite/?vanityName=<profile-vanity>`.
-2. Use DOM CUA to click `Add a note`.
-3. Focus `textarea[name="message"]`.
-4. Type the normalized note character-by-character with keyboard events.
-5. Do not start with generic fill, paste, or clipboard writes; these can fail when the virtual clipboard is unavailable.
-6. Read `textarea[name="message"]` with page evaluation and verify it exactly matches the approved normalized note.
-7. Click the enabled `Send invitation` button only after verification.
+2. Inspect the visible modal and click the actual visible `Add a note` button for that modal. Do not reuse coordinates from another profile.
+3. Focus the visible `textarea[name="message"]`.
+4. Type the normalized note character-by-character with keyboard events. Do not try fill, paste, clipboard writes, or bulk text entry first.
+5. Verify all of the following before sending: the note box is visibly open, the full note is visibly present, the counter shows the expected `N/300`, the textarea value exactly matches the approved note, and the Send button is enabled.
+6. Click only the verified `Send invitation` button. If any check is ambiguous, stop and report instead of sending.
+7. After any timeout, unexpected modal state, or off-target click, inspect the current state before any further click.
 
 ## Completion
 

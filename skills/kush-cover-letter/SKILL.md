@@ -7,7 +7,7 @@ description: Write or revise Kushagra's company-specific cover-letter.md for a t
 
 ## Purpose
 
-Create a specific, concise cover letter for one company and role. The letter should sound like Kushagra: direct, ambitious, technical, and human without sounding dramatic or generic. Use the job description, company research, current resume, and `llms.txt` with judgment instead of following a rigid formula.
+Create a specific, concise cover letter for one company and role. The letter should sound like Kushagra: direct, ambitious, technical, and human without sounding dramatic or generic. Use the job description, company research, current resume, and `llms.txt` with judgment while preserving the root template's basic shape unless the user asks otherwise.
 
 Use this skill inside `$kush-app-workflow` or on its own. If `$humanizer` is active, use it only after the factual draft is complete.
 
@@ -24,6 +24,8 @@ Read:
 
 Hard rule: never edit the root cover letter template. Only edit the company-specific copy.
 
+Template rule: the company-specific `cover-letter.md` starts from `Kushagra Bharti Cover Letter - General Template.md`. Preserve that template's overall structure: direct greeting, short opening, evidence bullets or compact evidence section, company-fit paragraph, ownership/personality paragraph, close, and linked signature. Tailor the placeholders; do not replace the format with a generic cover-letter essay unless the user explicitly asks.
+
 ## Goals
 
 The letter should:
@@ -31,6 +33,7 @@ The letter should:
 - Connect 2-3 strongest experiences to the role.
 - Use one or two concrete company/team/product details.
 - Show motivation and work ethic through evidence, not self-labels.
+- Let personality through with direct, specific lines about ownership, learning speed, taste, or high standards when supported by context.
 - Stay brief while still having substance.
 - Fit cleanly on one PDF page.
 
@@ -60,25 +63,27 @@ Value -> what the team seems to reward -> concrete evidence from Kushagra's work
 
 ## Structure
 
-Default shape:
+Default shape should follow the root template:
 
 ```text
 Date / recipient block
 
-Opening: role, company, and the clearest reason this role fits.
+Greeting.
 
-Technical fit: strongest project, internship, or research match.
+Opening: role, company, and the clearest specific reason this role fits.
 
-Second fit: another relevant system/product/research/trading example.
+Evidence section: 2-3 bullets or compact paragraphs mapping real work to the role.
 
-Company fit: specific team/company reason and how Kushagra would contribute.
+Company fit: plain, specific reason this company/team is interesting.
+
+Personality/ownership: concise line about how Kushagra works, grounded in evidence.
 
 Close: concise interest.
 
 Signature block
 ```
 
-Do not force all sections if a shorter letter is stronger.
+Do not force all sections if a shorter letter is stronger, but keep the root template's recognizable shape when possible.
 
 ## Signature
 

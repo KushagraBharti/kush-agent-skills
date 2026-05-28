@@ -22,6 +22,8 @@ Read:
 
 Hard rule: never edit root `resume.tex`. Only edit the company-specific copy.
 
+Eligibility rule: for internship roles, set the education date to `August 2023 -- December 2027` by default. Use `August 2023 -- May 2027` only for new-grad roles or when the user explicitly asks. Do not change the root resume while tailoring a company-specific packet unless the user is updating the base resume itself.
+
 ## ATS Map
 
 Before editing, build an internal map:
@@ -89,6 +91,7 @@ Do:
 - Prefer technical nouns over filler adjectives.
 - Keep metrics, titles, dates, employers, schools, and awards exact.
 - Preserve LaTeX syntax, links, commands, spacing conventions, and section structure.
+- Keep project-heading right-side date/status arguments empty; project dates do not add value here.
 - Keep the resume to one page.
 
 Do not:
