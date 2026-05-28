@@ -41,6 +41,7 @@ resume.tex
 Kushagra Bharti Cover Letter - General Template.md
 new-tailored-application.cmd
 build-application.cmd
+Application_Tracker.xlsx
 03_Tailored_Applications/
 ```
 
@@ -51,6 +52,7 @@ Hard rules:
 - Only tailor `03_Tailored_Applications/<Company>/resume.tex` and `cover-letter.md`.
 - Put written application answers in `03_Tailored_Applications/<Company>/application-questions.md`.
 - Do not create extra reference files unless the user asks or the workflow output requires them.
+- If updating the application tracker, keep the simple schema exactly as-is unless the user asks for a new column.
 - If root files change unexpectedly, stop and report before committing.
 
 ## Approval Gates
@@ -293,6 +295,14 @@ Preferred in-app browser method:
 6. Click only the verified `Send invitation` button. If any check is ambiguous, stop and report instead of sending.
 7. After any timeout, unexpected modal state, or off-target click, inspect the current state before any further click.
 
+### 15. Final Tracker Update
+
+As the final workflow step, update `Application_Tracker.xlsx` once. Upsert the current application row using only the existing columns: `Company`, `Role`, `Role Type`, `Season`, `Location`, `Posting Link`, `Status`, `Date Applied`, `LinkedIn Reachouts`, `Notes`.
+
+Use only these status values: `need to apply`, `applied`, `OA`, `interview`, `rejected`, `offer`.
+
+Kushagra treats a completed tailored packet as submitted. So when the tailoring workflow is done, set `Status` to `applied` and set `Date Applied` to the actual submission date if known; otherwise use the date the tailored packet was finalized. Add only actually messaged LinkedIn profile URLs to `LinkedIn Reachouts`, keep `Notes` short, and mention if the tracker could not be updated.
+
 ## Completion
 
-The workflow is complete when the user-approved application packet is built, verified, committed/pushed, outreach targets/messages have passed Gate B, and approved sends have either completed or been reported as blocked/skipped.
+The workflow is complete when the user-approved application packet is built, verified, committed/pushed, outreach targets/messages have passed Gate B, approved sends have either completed or been reported as blocked/skipped, and `Application_Tracker.xlsx` has been updated or the blocker is clearly reported.
