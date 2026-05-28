@@ -1,0 +1,4 @@
+interface:
+  display_name: "Kush App Workflow"
+  short_description: "Tailor internship application packets"
+  default_prompt: "Use $kush-app-workflow to tailor my application packet for this company and job posting."
