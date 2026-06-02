@@ -39,8 +39,8 @@ Expected files:
 llms.txt
 resume.tex
 Kushagra Bharti Cover Letter - General Template.md
-new-tailored-application.cmd
-build-application.cmd
+scripts/new-tailored-application.cmd
+scripts/build-application.cmd
 Application_Tracker.xlsx
 03_Tailored_Applications/
 ```
@@ -89,7 +89,7 @@ Get-Content -LiteralPath .\llms.txt
 Run:
 
 ```powershell
-.\new-tailored-application.cmd "<Company>"
+.\scripts\new-tailored-application.cmd "<Company>"
 ```
 
 If the company folder already exists, inspect it and continue. Do not use `-Force` unless the user explicitly asks.
@@ -167,7 +167,7 @@ If writing prompts are provided:
 Run:
 
 ```powershell
-.\build-application.cmd "<Company>" -Clean
+.\scripts\build-application.cmd "<Company>" -Clean
 ```
 
 Expected outputs:
