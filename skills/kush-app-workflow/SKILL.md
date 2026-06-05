@@ -96,7 +96,7 @@ If the company folder already exists, inspect it and continue. Do not use `-Forc
 
 ### 3. Research
 
-Research current company/job facts when a URL, company, or role is externally verifiable. Prefer:
+Research current company/job facts when a URL, company, or role is externally verifiable. Use your web search capabilities. Prefer:
 
 - Job posting page.
 - Company careers page.
@@ -109,19 +109,53 @@ Capture only facts that improve tailoring. Avoid padding the resume or cover let
 
 Edit only `03_Tailored_Applications/<Company>/resume.tex`.
 
-Light resume guardrails:
+Always use `$kush-resume-tailor`. It is necessary.
 
-- The resume is already full. Improve fit by rewriting, compressing, reordering, and swapping project/experience content.
-- Let the job description drive the edits; do not force predefined role buckets or fixed project matrices.
-- Build a compact ATS map: `requirement -> evidence -> edit`.
-- For internship roles, use `August 2023 -- December 2027` as the education date by default. Use `August 2023 -- May 2027` only for new-grad roles or when the user explicitly asks.
+Resume tailoring is conservative by default. Kushagra's base resume is already strong and full; the goal is to make the existing page read slightly closer to the posting, not rebuild it.
+
+Common rules:
+
+- Let the job description drive small edits, but assume most postings need only minimal keyword and emphasis changes.
+- Build a compact ATS map before editing: `requirement -> supported evidence -> minimal edit`.
+- Preserve the resume's density. Do not delete bullets or shrink the resume into a visibly underfilled page just because some bullets are less directly relevant.
+- Do not edit the LaTeX preamble, custom commands, header/contact block, spacing commands, section structure, or link syntax.
 - Add exact job keywords only when supported by `llms.txt`, root resume, company-specific resume, or user notes.
-- Do not edit the Technical Skills section unless the user explicitly asks. Tailoring should happen through Experience and Projects.
-- Preserve project links when known; never invent missing links.
-- Project headings should not include dates or status labels.
-- Keep the resume one page. If it spills, fix content before formatting.
+- Keep the resume one full page. If it spills or becomes underfilled, fix content first and preserve density before touching formatting.
 
-Use `$kush-resume-tailor` when active; otherwise follow these rules directly.
+Education rules:
+
+- The only normal edit above Experience is the Education date.
+- For internship roles, set Education to `August 2023 -- December 2027`.
+- For new-grad roles, set Education to `August 2023 -- May 2027`.
+- Do not leave the base `May/Dec 2027` placeholder.
+- Do not change the school, degree, minor, certificate, coursework, or location unless the user explicitly asks.
+
+Technical Skills rules:
+
+- Treat Technical Skills as no-touch by default.
+- Only add one or two supported skills if the posting explicitly values them, the evidence exists in `llms.txt` or the resume, and the addition does not require removing or reordering existing skills.
+- Never remove, reorder, rename, or broadly tune skills for ATS.
+
+Experience rules:
+
+- Do not swap, remove, or reorder experiences. Experience chronology is fixed.
+- Preserve each experience's title, employer, date range, location, and link.
+- Do not change the number of experience bullets by default. Rewrite bullets in place. Rewrites should preserve high quality and density, foreground supported keywords, and maintain ATS coverage. Rewrites should be clear and maintain the same voice and writing style as the rest of the resume.
+- Do not broadly compress experience content. If a bullet is lower-fit, usually rewrite it to foreground supported job language instead of cutting it.
+
+Project rules:
+
+- Preserve project links when known; never invent missing links.
+- Keep project-heading right-side date/status arguments empty.
+- Preserve project order and bullet count unless a rare project swap truly requires adjustment.
+- Swap a project only in rare, high-signal cases where the posting has a clear domain match that the current projects miss, such as RL, LLM agents, computer vision, web-dev, quant, backend systems, etc. This should be pretty rare, and it's your judgement. You can either swap a project cleanly, or reduce the existing projects to make space for a new one. Either way it should be rare. The existing 3 projects are already very strong contenders.
+- When a rare swap is justified, replace or shorten the lowest-fit current project. Do not append extra projects. Make the judgment call based on the role, the posting, and the strongest evidence in `llms.txt`.
+
+Final checks:
+
+- The resume should still look like a full, dense, high-signal one-page resume.
+- The edit should read as targeted tailoring, not a reconstructed resume.
+- Unsupported requirements should be reported, not forced into the resume.
 
 ### 5. Tailor Cover Letter
 
@@ -134,7 +168,7 @@ Light cover-letter guardrails:
 - Connect 2-3 strongest experiences to the role.
 - Mention one or two researched company/team/product details.
 - Show work ethic and company-values fit through examples, not slogans.
-- Keep it one page.
+- Keep it one page maximum.
 
 Use this default signature unless the user asks otherwise:
 
@@ -227,7 +261,7 @@ Tailor application for <Company>
 
 ### 11. LinkedIn Target Research
 
-After commit/push, use browser automation only if the user is already logged in. Do not bypass captchas, login challenges, anti-automation prompts, rate limits, or access restrictions.
+After commit/push, use browser automation, the user should already be logged in (if not ask the user to log in).
 
 Find 5 high-quality targets. Optimize for conversation quality, not the easiest visible Connect buttons.
 
@@ -239,7 +273,7 @@ Target mix:
 
 If the ideal mix is unavailable, choose the strongest substitutes and explain the gap.
 
-Use a light scorecard while choosing: relevance to the role/team, natural conversation hook, sendability, and risk of wasting the request. Inspect profiles before choosing when possible. Prefer people whose background gives a natural reason to ask for insight.
+Use a light scorecard while choosing: relevance to the role/team, natural conversation hook, sendability, and risk of wasting the request. Inspect profiles before choosing when possible. Prefer people whose background gives a natural reason to ask for insight. The message we send should be specific but also naturally invite a reply. Avoid targets whose profiles suggest they won't reply or will reject the request.
 
 ### 12. Draft Outreach
 
@@ -262,15 +296,17 @@ Message rules:
 - Do not make it a generic connect request.
 - Do not claim a relationship, referral, or shared background that is not verified.
 - Prefer `CS student` over naming UTD unless the school is a genuine conversation hook. The shorter intro leaves more room for a better personalized ask.
-- Prefer direct asks like `I want to talk with you about...` or `I'd like to talk to you about...`.
+- Prefer direct asks like `I want to talk with you about...`, `I'd like to talk to you about...`, or `I'd appreciate your insights on...`, etc.
 - Avoid vague `advice` language, generic admiration, inflated praise, pitch-like lines, and `10 minutes`.
-- Do not use `would love to` unless the full phrase is formal and grammatical, such as `I would love to...`; even then, prefer the more direct ask above.
+- Use full sentences, and treat this as a business communication. Do not make it sound like a text to a friend. Full complete sentences.
 
-Default shape:
+More Guidance on Linkedin Message:
 
-```text
-Hi <Name>, I'm a CS student applying to <Company>/<Role>. I saw <specific verified hook>. I'd like to talk to you about <specific role/team/topic that naturally continues the conversation>.
-```
+- Sound natural, warm, friendly, but professional. Avoid being too formal or too casual.
+- Be specific about why you're reaching out to this person. Mention something from their profile or experience that caught your eye and relates to your ask.
+- Ask for a quick conversation because you have some questions about their experience at the company, in the industry, or just in general.
+- Make it interesting enough that they want to reply, but not so long that it becomes a chore to read. 270-300 characters is a good target when possible.
+- Use high quality and engaging language, but avoid anything that sounds like a sales pitch or over-the-top praise. You want to come across as genuine and thoughtful, not like you're trying to impress them with fancy words.
 
 ### 13. Gate B Response
 
@@ -286,24 +322,21 @@ LGTM SEND
 
 ### 14. Send Approved Connection Requests
 
-Only after `LGTM SEND`:
+Only after exact `LGTM SEND`, use the [$browser:control-in-app-browser](C:\\Users\\kushagra\\.codex\\plugins\\cache\\openai-bundled\\browser\\26.527.31326\\skills\\control-in-app-browser\\SKILL.md) skill and send requests one person at a time.
 
-1. Send only the approved notes.
-2. Do not change the notes except replacing unsupported punctuation with typeable equivalents.
-3. Send one person at a time; do not batch multiple invite sends.
-4. Never click any path that says or implies sending without a note.
-5. Stop if LinkedIn blocks, rate-limits, challenges, rejects the approved under-300-character note, or shows an unexpected prompt.
-6. Report sent, skipped, and blocked requests.
+For each approved target:
 
-Preferred in-app browser method:
+1. Use only the approved note. Do not change it except replacing unsupported punctuation with typeable equivalents.
+2. Open the approved LinkedIn profile URL.
+3. Inspect the profile page and click the visible `Connect` button.
+4. When the connection modal opens, verify it offers `Send without a note` and `Add a note`. Always click the actual visible `Add a note` button. Never click any path that says or implies sending without a note, and do not reuse coordinates from another profile.
+5. Focus the visible `textarea[name="message"]` and type the normalized note character-by-character with keyboard events. Do not use fill, paste, clipboard writes, or bulk text entry.
+6. Before sending, verify all of the following: the note box is visibly open, the full note is visibly present, the counter shows the expected `N/300`, the textarea value exactly matches the approved note, and the Send button is enabled.
+7. Take one final look at the modal. If any check is ambiguous, stop and report instead of sending.
+8. Click only the verified `Send invitation` button.
+9. Report sent, skipped, and blocked requests.
 
-1. Open `https://www.linkedin.com/preload/custom-invite/?vanityName=<profile-vanity>`.
-2. Inspect the visible modal and click the actual visible `Add a note` button for that modal. Do not reuse coordinates from another profile.
-3. Focus the visible `textarea[name="message"]`.
-4. Type the normalized note character-by-character with keyboard events. Do not try fill, paste, clipboard writes, or bulk text entry first.
-5. Verify all of the following before sending: the note box is visibly open, the full note is visibly present, the counter shows the expected `N/300`, the textarea value exactly matches the approved note, and the Send button is enabled.
-6. Click only the verified `Send invitation` button. If any check is ambiguous, stop and report instead of sending.
-7. After any timeout, unexpected modal state, or off-target click, inspect the current state before any further click.
+Work through it all and get all 5 connections with notes sent.
 
 ### 15. Final Tracker Update
 

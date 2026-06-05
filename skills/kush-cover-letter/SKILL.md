@@ -126,7 +126,8 @@ If `$humanizer` is active:
 1. Draft factually first.
 2. Remove inflated wording, filler transitions, cliches, and AI-ish rhythm.
 3. Preserve company names, dates, metrics, technical terms, and links.
-4. Keep the final letter one-page ready.
+4. Rewrite to sound natural, have no corny lines, be concise, professional but human, and maintain the same structure.
+5. Keep the final letter one-page ready.
 
 ## Output
 
