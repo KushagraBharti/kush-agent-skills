@@ -115,6 +115,8 @@ Do not:
 
 - Invent company facts, referrals, personal connections, experience, metrics, or links.
 - Mention values/products unless researched or user-provided.
+- If the posting includes a technology Kushagra does not have supported experience with, do not mention that technology at all.
+- Do not write disclaimers like "while I do not have experience with X." Leave unsupported technologies out of the letter.
 - Apologize for being a student or intern candidate.
 - Use generic openings like "I am writing to apply" when a sharper opening is possible.
 - Submit or send anything.

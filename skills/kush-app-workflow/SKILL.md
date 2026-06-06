@@ -77,6 +77,7 @@ Plain `lgtm` approves the application packet only; it is not approval to send ou
 2. Inspect the repo layout and confirm required scripts exist.
 3. Read `llms.txt`, root `resume.tex`, and root cover letter template.
 4. If company or role is ambiguous, ask one concise clarification before creating files.
+5. If multiple postings for the same company are supplied or detected together, treat them as one company packet unless the user explicitly asks for separate packets. Tailor the resume toward the combined requirements across those postings instead of overfitting to one job description.
 
 On Windows, `llms.txt` may be a symlink whose file length appears as `0`. Do not check size/length to decide whether it has content. Read it directly with:
 
@@ -92,7 +93,13 @@ Run:
 .\scripts\new-tailored-application.cmd "<Company>"
 ```
 
-If the company folder already exists, inspect it and continue. Do not use `-Force` unless the user explicitly asks.
+If the company folder already exists, overwrite and refresh the workflow-generated packet files for the current posting or posting set:
+
+```powershell
+.\scripts\new-tailored-application.cmd "<Company>" -Force
+```
+
+Existing company-specific `resume.tex`, `cover-letter.md`, generated PDFs, job metadata, and workflow artifacts may be replaced. Do not revert or touch unrelated files outside the target company folder unless the workflow explicitly requires a shared tracker update.
 
 ### 3. Research
 
@@ -102,6 +109,8 @@ Research current company/job facts when a URL, company, or role is externally ve
 - Company careers page.
 - Company product, engineering, blog, docs, or about pages.
 - LinkedIn company page only for outreach research.
+
+If the job posting is supplied as a URL/link, use the [$browser:control-in-app-browser](C:\\Users\\kushagra\\.codex\\plugins\\cache\\openai-bundled\\browser\\26.527.31326\\skills\\control-in-app-browser\\SKILL.md) skill to open and read the posting in detail before tailoring. If the user supplied only pasted job text and no link, browser inspection is not required for the posting. If the linked posting is inaccessible, blocked, expired, or requires login, report that clearly and use the best available job text or search result instead.
 
 Capture only facts that improve tailoring. Avoid padding the resume or cover letter with vague praise.
 
@@ -116,6 +125,7 @@ Resume tailoring is conservative by default. Kushagra's base resume is already s
 Common rules:
 
 - Let the job description drive small edits, but assume most postings need only minimal keyword and emphasis changes.
+- If tailoring for multiple postings at the same company, build one combined ATS map across the postings and optimize for the strongest shared requirements. Do not create separate resumes for each posting unless the user explicitly asks.
 - Build a compact ATS map before editing: `requirement -> supported evidence -> minimal edit`.
 - Preserve the resume's density. Do not delete bullets or shrink the resume into a visibly underfilled page just because some bullets are less directly relevant.
 - Do not edit the LaTeX preamble, custom commands, header/contact block, spacing commands, section structure, or link syntax.
@@ -168,6 +178,7 @@ Light cover-letter guardrails:
 - Connect 2-3 strongest experiences to the role.
 - Mention one or two researched company/team/product details.
 - Show work ethic and company-values fit through examples, not slogans.
+- Omit unsupported technologies entirely; do not write "I do not have experience with X" disclaimers.
 - Keep it one page maximum.
 
 Use this default signature unless the user asks otherwise:
