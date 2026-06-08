@@ -307,15 +307,17 @@ Message rules:
 - Do not make it a generic connect request.
 - Do not claim a relationship, referral, or shared background that is not verified.
 - Prefer `CS student` over naming UTD unless the school is a genuine conversation hook. The shorter intro leaves more room for a better personalized ask.
-- Prefer direct asks like `I want to talk with you about...`, `I'd like to talk to you about...`, or `I'd appreciate your insights on...`, etc.
-- Avoid vague `advice` language, generic admiration, inflated praise, pitch-like lines, and `10 minutes`.
+- Prefer direct quick-chat asks like `If you have a quick minute, I'd love to talk about...`, `I wanted to ask if we could hop on a quick call to talk about...`, or `I'd like to talk with you about...`.
+- For recruiters, talent partners, university recruiters, and hiring targets, ask for a quick call to talk about roles at the company, the target team, or where Kushagra's background may fit. Do not ask vague questions like what makes an applicant stand out.
+- For technical targets, name the specific thing from their work/profile and ask to talk about that topic directly, e.g. `If you have a quick minute, I'd love to talk about AV perception and mapping work.`
+- Avoid vague `advice` language, generic `perspective` language, generic admiration, inflated praise, pitch-like lines, and `10 minutes`.
 - Use full sentences, and treat this as a business communication. Do not make it sound like a text to a friend. Full complete sentences.
 
 More Guidance on Linkedin Message:
 
 - Sound natural, warm, friendly, but professional. Avoid being too formal or too casual.
 - Be specific about why you're reaching out to this person. Mention something from their profile or experience that caught your eye and relates to your ask.
-- Ask for a quick conversation because you have some questions about their experience at the company, in the industry, or just in general.
+- Ask for a quick conversation directly. For hiring targets, make the ask about roles at the company or where Kushagra may fit. For technical targets, make the ask about the specific technical topic or team work that made the target worth contacting.
 - Make it interesting enough that they want to reply, but not so long that it becomes a chore to read. 270-300 characters is a good target when possible.
 - Use high quality and engaging language, but avoid anything that sounds like a sales pitch or over-the-top praise. You want to come across as genuine and thoughtful, not like you're trying to impress them with fancy words.
 
