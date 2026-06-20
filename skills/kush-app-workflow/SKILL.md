@@ -1,13 +1,13 @@
 ---
 name: kush-app-workflow
-description: End-to-end internship application workflow for Kushagra that creates company-specific packets, coordinates kush-resume-tailor, kush-cover-letter, and humanizer, answers application writing prompts, builds and visually verifies one-page PDFs, waits for human approval, commits and pushes approved packets, then researches LinkedIn targets, drafts high-quality outreach, and sends only after explicit LGTM SEND approval.
+description: End-to-end internship application workflow for Kushagra that creates company-specific packets, coordinates kush-resume-tailor, kush-cover-letter, and humanizer, answers application prompts, builds and visually verifies one-page PDFs, waits for human approval, researches LinkedIn targets, drafts outreach, sends only after explicit LGTM SEND approval, updates the tracker, cleans artifacts, and commits/pushes once at the end.
 ---
 
 # Kush App Workflow
 
 ## Purpose
 
-Run the full internship application loop from job posting to approved PDFs, written application answers, Git commit/push, LinkedIn target research, outreach draft review, and approved connection sends.
+Run the full internship application loop from job posting to approved PDFs, written application answers, LinkedIn target research, outreach draft review, approved connection sends, tracker update, cleanup, and one final Git commit/push.
 
 This skill is procedural. Do not assume personal facts outside the workspace, `llms.txt`, resume, cover letter template, job posting, company research, or explicit user notes.
 
@@ -78,6 +78,7 @@ Plain `lgtm` approves the application packet only; it is not approval to send ou
 3. Read `llms.txt`, root `resume.tex`, and root cover letter template.
 4. If company or role is ambiguous, ask one concise clarification before creating files.
 5. If multiple postings for the same company are supplied or detected together, treat them as one company packet unless the user explicitly asks for separate packets. Tailor the resume toward the combined requirements across those postings instead of overfitting to one job description.
+6. If the user provides application questions or application-field text, treat that as authoritative. Do not rediscover or replace it from the posting.
 
 On Windows, `llms.txt` may be a symlink whose file length appears as `0`. Do not check size/length to decide whether it has content. Read it directly with:
 
@@ -103,16 +104,22 @@ Existing company-specific `resume.tex`, `cover-letter.md`, generated PDFs, job m
 
 ### 3. Research
 
-Research current company/job facts when a URL, company, or role is externally verifiable. Use your web search capabilities. Prefer:
+Keep posting intake simple and source-faithful:
 
-- Job posting page.
-- Company careers page.
-- Company product, engineering, blog, docs, or about pages.
-- LinkedIn company page only for outreach research.
+- If the user pasted the posting or application questions, use that text directly.
+- If the user supplied only a job link, open that exact link and read it. Prefer [$chrome:Chrome](C:\\Users\\kushagra\\.codex\\plugins\\cache\\openai-bundled\\chrome\\26.519.81530\\skills\\chrome\\SKILL.md); [$browser:control-in-app-browser](C:\\Users\\kushagra\\.codex\\plugins\\cache\\openai-bundled\\browser\\26.527.31326\\skills\\control-in-app-browser\\SKILL.md) is also acceptable.
+- Do not use web search to reconstruct job requirements or application questions.
+- If the exact linked posting is inaccessible, blocked, expired, or requires login, report that clearly and use only user-provided posting text unless the user asks for broader recovery.
 
-If the job posting is supplied as a URL/link, use the [$browser:control-in-app-browser](C:\\Users\\kushagra\\.codex\\plugins\\cache\\openai-bundled\\browser\\26.527.31326\\skills\\control-in-app-browser\\SKILL.md) skill to open and read the posting in detail before tailoring. If the user supplied only pasted job text and no link, browser inspection is not required for the posting. If the linked posting is inaccessible, blocked, expired, or requires login, report that clearly and use the best available job text or search result instead.
+For company/product context, use only enough primary-source research to make the packet specific. Avoid padding the resume or cover letter with vague praise.
 
-Capture only facts that improve tailoring. Avoid padding the resume or cover letter with vague praise.
+Before editing, set a compact internal plan:
+
+```text
+packet thesis -> artifact roles -> compact ATS map
+```
+
+Keep the artifacts non-duplicative: resume = dense proof, cover letter = additive story/fit, application answers = exact prompt response, LinkedIn notes = small hook plus reason to talk.
 
 ### 4. Tailor Resume
 
@@ -254,25 +261,16 @@ Do not commit, push, research LinkedIn people, or send anything before Gate A ap
 
 If the user gives feedback, incorporate it and repeat steps 4-9.
 
-### 10. Commit And Push
+### 10. After Gate A Approval
 
 After Gate A `lgtm`:
 
-1. Run `git status`.
-2. Confirm root resume/template were not edited.
-3. Verify GitHub remote visibility when possible. If a public repo appears to contain private application materials, stop and ask.
-4. Stage only relevant application packet changes.
-5. Commit with:
-
-```text
-Tailor application for <Company>
-```
-
-6. Push the current branch.
+1. Continue to LinkedIn target research.
+2. Do not commit or push yet. Commit once at the end after tracker update and cleanup.
 
 ### 11. LinkedIn Target Research
 
-After commit/push, use browser automation, the user should already be logged in (if not ask the user to log in).
+After Gate A approval, use browser automation. Prefer [$chrome:Chrome](C:\\Users\\kushagra\\.codex\\plugins\\cache\\openai-bundled\\chrome\\26.519.81530\\skills\\chrome\\SKILL.md) for LinkedIn because it uses the user's logged-in Chrome session; [$browser:control-in-app-browser](C:\\Users\\kushagra\\.codex\\plugins\\cache\\openai-bundled\\browser\\26.527.31326\\skills\\control-in-app-browser\\SKILL.md) is acceptable if Chrome is unavailable. If the user is not logged in, ask them to log in.
 
 Find 5 high-quality targets. Optimize for conversation quality, not the easiest visible Connect buttons.
 
@@ -335,25 +333,32 @@ LGTM SEND
 
 ### 14. Send Approved Connection Requests
 
-Only after exact `LGTM SEND`, use the [$browser:control-in-app-browser](C:\\Users\\kushagra\\.codex\\plugins\\cache\\openai-bundled\\browser\\26.527.31326\\skills\\control-in-app-browser\\SKILL.md) skill and send requests one person at a time.
+Only after exact `LGTM SEND`, send requests one person at a time. Prefer [$chrome:Chrome](C:\\Users\\kushagra\\.codex\\plugins\\cache\\openai-bundled\\chrome\\26.519.81530\\skills\\chrome\\SKILL.md); [$browser:control-in-app-browser](C:\\Users\\kushagra\\.codex\\plugins\\cache\\openai-bundled\\browser\\26.527.31326\\skills\\control-in-app-browser\\SKILL.md) is also acceptable.
 
 For each approved target:
 
 1. Use only the approved note. Do not change it except replacing unsupported punctuation with typeable equivalents.
-2. Open the approved LinkedIn profile URL.
-3. Inspect the profile page and click the visible `Connect` button.
-4. When the connection modal opens, verify it offers `Send without a note` and `Add a note`. Always click the actual visible `Add a note` button. Never click any path that says or implies sending without a note, and do not reuse coordinates from another profile.
-5. Focus the visible `textarea[name="message"]` and type the normalized note character-by-character with keyboard events. Do not use fill, paste, clipboard writes, or bulk text entry.
-6. Before sending, verify all of the following: the note box is visibly open, the full note is visibly present, the counter shows the expected `N/300`, the textarea value exactly matches the approved note, and the Send button is enabled.
-7. Take one final look at the modal. If any check is ambiguous, stop and report instead of sending.
-8. Click only the verified `Send invitation` button.
-9. Report sent, skipped, and blocked requests.
+2. Prefer the direct invite URL when the profile vanity is clear: `https://www.linkedin.com/preload/custom-invite/?vanityName=<profile-vanity>`. Otherwise open the approved LinkedIn profile URL and click the visible, target-specific `Connect` or `Invite <name> to connect` control.
+3. Inspect the modal before clicking. Stop if LinkedIn blocks, rate-limits, challenges, rejects the note, or shows an unexpected prompt.
+4. Always click the actual visible `Add a note` button. Never click any path that says or implies sending without a note, and do not reuse coordinates from another profile.
+5. If `Add a note` is visible but flaky, retry the same target safely using the direct invite surface or a verified forced click on `Add a note` only. Do not force-click `Send`.
+6. Focus the visible note textarea and type the normalized note character-by-character with keyboard events, preferably low-level keypresses. Do not use fill, paste, clipboard writes, or bulk text entry.
+7. Before sending, verify all of the following: the note box is visibly open, the full note is visibly present, the counter shows the expected `N/300`, the textarea value exactly matches the approved note, and the Send button is enabled.
+8. Take one final look at the modal. If any check is ambiguous, stop and report instead of sending.
+9. Click only the verified `Send invitation` button.
+10. Report sent, skipped, and blocked requests.
 
-Work through it all and get all 5 connections with notes sent.
+Try to complete all approved sends. Report any target LinkedIn blocks or makes ambiguous.
 
 ### 15. Final Tracker Update
 
-As the final workflow step, update `Application_Tracker.xlsx` once. Upsert the current application row using only the existing columns: `Company`, `Role`, `Role Type`, `Season`, `Location`, `Posting Link`, `Status`, `Date Applied`, `LinkedIn Reachouts`, `Notes`.
+As the final data step, update `Application_Tracker.xlsx` once. Prefer:
+
+```powershell
+.\scripts\update-tracker.cmd --company "<Company>" --role "<Role>" --role-type "Internship" --season "<Season>" --location "<Location>" --posting-link "<url1>" --posting-link "<url2>" --status "applied" --date-applied "<Month D, YYYY>" --linkedin-reachouts "<url1>" --linkedin-reachouts "<url2>" --notes "Tailored packet completed; LinkedIn outreach sent."
+```
+
+Upsert the current application row using only the existing columns: `Company`, `Role`, `Role Type`, `Season`, `Location`, `Posting Link`, `Status`, `Date Applied`, `LinkedIn Reachouts`, `Notes`.
 
 Use only these role type values: `Internship`, `New Grad`, `Other`.
 
@@ -361,6 +366,22 @@ Use only these status values: `need to apply`, `applied`, `OA`, `interview`, `re
 
 Kushagra treats a completed tailored packet as submitted. So when the tailoring workflow is done, set `Status` to `applied` and set `Date Applied` to the actual submission date if known; otherwise use the date the tailored packet was finalized. Add only actually messaged LinkedIn profile URLs to `LinkedIn Reachouts`, keep `Notes` short, and mention if the tracker could not be updated.
 
+### 16. Cleanup And Final Commit
+
+After the tracker update:
+
+1. Delete build/render temp folders for the target company packet, including `.build` and verification render folders created by the workflow.
+2. Run `git status`.
+3. Confirm root `resume.tex` and the root cover-letter template were not edited.
+4. Stage the target company packet and `Application_Tracker.xlsx`. Ignore unrelated untracked files unless they block the task.
+5. Commit once with:
+
+```text
+Tailor application for <Company>
+```
+
+6. Push the current branch.
+
 ## Completion
 
-The workflow is complete when the user-approved application packet is built, verified, committed/pushed, outreach targets/messages have passed Gate B, approved sends have either completed or been reported as blocked/skipped, and `Application_Tracker.xlsx` has been updated or the blocker is clearly reported.
+The workflow is complete when the user-approved application packet is built and verified, outreach targets/messages have passed Gate B, approved sends have either completed or been reported as blocked/skipped, `Application_Tracker.xlsx` has been updated or the blocker is clearly reported, temp artifacts are cleaned, and the final commit/push is done.

@@ -15,7 +15,7 @@ Use this skill inside `$kush-app-workflow` or on its own. If `$humanizer` is act
 
 Read:
 
-- Job posting text or URL.
+- Job posting text or exact URL. Use user-provided posting/application text as authoritative.
 - `llms.txt` for current profile context, projects, motivation, links, and voice.
 - Root cover letter template for baseline structure only.
 - Company-specific `03_Tailored_Applications/<Company>/cover-letter.md` for edits.
@@ -31,6 +31,7 @@ Template rule: the company-specific `cover-letter.md` starts from `Kushagra Bhar
 The letter should:
 
 - Connect 2-3 strongest experiences to the role.
+- Add to the resume instead of repeating it. Use the letter for motivation, product taste, systems judgment, company fit, or complementary projects.
 - Use one or two concrete company/team/product details.
 - Show motivation and work ethic through evidence, not self-labels.
 - Let personality through with direct, specific lines about ownership, learning speed, taste, or high standards when supported by context.
@@ -108,6 +109,7 @@ Do:
 - Match the job's strongest requirements to real work.
 - Keep claims verifiable from `llms.txt`, resume, or user-provided context.
 - Keep the letter distinct from application-question answers.
+- Keep the letter distinct from the resume. Do not turn resume bullets into paragraphs unless the added context changes the reader's understanding.
 - Before finalizing, make sure each paragraph answers either "why this role/company" or "why this evidence matters."
 - Tighten aggressively if it spills to a second page.
 
@@ -117,6 +119,7 @@ Do not:
 - Mention values/products unless researched or user-provided.
 - If the posting includes a technology Kushagra does not have supported experience with, do not mention that technology at all.
 - Do not write disclaimers like "while I do not have experience with X." Leave unsupported technologies out of the letter.
+- Do not use abstract product-manifesto language when a plain explanation is stronger.
 - Apologize for being a student or intern candidate.
 - Use generic openings like "I am writing to apply" when a sharper opening is possible.
 - Submit or send anything.

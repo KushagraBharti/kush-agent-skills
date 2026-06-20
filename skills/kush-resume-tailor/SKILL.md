@@ -17,10 +17,12 @@ Use this skill inside `$kush-app-workflow` or on its own. If `$humanizer` is act
 
 Read:
 
-- Job posting text or URL. Get content directly from the URL when possible, and use web search effectively.
+- Job posting text or URL. Use pasted text directly, or read the exact URL when only a link is provided.
 - `llms.txt` for current profile context, project inventory, metrics, links, and supported skills.
 - Root `resume.tex` for baseline context only.
 - Company-specific `03_Tailored_Applications/<Company>/resume.tex` for edits.
+
+If the user supplied pasted posting/application text, treat it as authoritative. If they supplied only a URL, use the exact URL content. Do not use web search to reconstruct job requirements.
 
 Hard rules:
 
@@ -39,6 +41,8 @@ role type -> top requirements -> supported evidence -> minimal resume edit
 ```
 
 Use the strategy to decide what to touch. If the current resume already covers the role well, make only the smallest useful changes.
+
+Balance ATS fit with interview defensibility. A change is not better just because it adds a keyword; the resulting resume should still feel strong, explainable, and honest in an interview.
 
 Prioritize:
 
@@ -88,10 +92,12 @@ Unsupported requirements belong in the final summary, not in the resume.
 - Preserve project order and bullet count unless a rare project swap truly requires adjustment.
 - Swap a project only in rare, high-signal cases where the posting has a clear domain match that the current projects miss, such as RL, LLM agents, computer vision, web-dev, quant, backend systems, etc.
 - Treat swaps as rare judgment calls. The existing three projects are already strong contenders.
+- Project swaps are allowed when the role clearly rewards it, but compare project strength, role fit, resume balance, and interview defensibility first.
 - When a rare swap is justified, either swap a project cleanly or reduce existing project content to make space for the new one. Either way, preserve a full, dense page.
 - Replace or shorten the lowest-fit current project. Do not append extra projects.
 - Choose based on the role, the posting, and the strongest evidence in `llms.txt`, not a fixed project matrix.
 - Use project links only when present in `llms.txt`, root resume, company-specific resume, or user input. If the best project lacks a known link, include it without inventing a URL and flag the missing link in the summary.
+- Use bold sparingly. Bold only high-signal technical or product claims that genuinely deserve emphasis.
 
 ## Bullet Standard
 
@@ -124,6 +130,7 @@ When rewriting:
 - Avoid generic ATS stuffing.
 - Avoid weakening a strong bullet just to insert one keyword.
 - Avoid duplicate evidence across bullets unless the role genuinely rewards repeated emphasis.
+- Avoid over-explaining product ideas in abstract language. Keep bullets concrete and normal.
 
 ## Final Checks
 
