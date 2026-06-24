@@ -211,7 +211,7 @@ If writing prompts are provided:
 3. Draft after resume and cover letter edits so positioning is consistent.
 4. Answer directly and truthfully in Kushagra's voice.
 5. Use the answer to address the exact prompt, not to repeat the cover letter.
-6. Respect word/character limits. When a limit matters, include a quick count or note for the user.
+6. Respect word/character limits. When a max is provided, aim to land within 10% of it without adding filler. Include a quick count or note for the user.
 7. Keep structure flexible; use only enough organization to make the answer clear and easy to paste.
 
 ### 7. Build
