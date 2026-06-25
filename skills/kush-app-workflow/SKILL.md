@@ -1,6 +1,6 @@
 ---
 name: kush-app-workflow
-description: End-to-end internship application workflow for Kushagra that creates company-specific packets, coordinates kush-resume-tailor, kush-cover-letter, and humanizer, answers application prompts, builds and visually verifies one-page PDFs, waits for human approval, researches LinkedIn targets, drafts outreach, sends only after explicit LGTM SEND approval, updates the tracker, cleans artifacts, and commits/pushes once at the end.
+description: End-to-end internship application workflow for Kushagra that creates company-specific packets, coordinates kush-resume-tailor, kush-cover-letter, humanizer, and cold-message-writer, answers prompts, builds/verifies one-page PDFs, gates approval, researches LinkedIn targets, drafts outreach, sends only after explicit LGTM SEND approval, updates the tracker, cleans artifacts, and commits/pushes once at the end.
 ---
 
 # Kush App Workflow
@@ -14,7 +14,7 @@ This skill is procedural. Do not assume personal facts outside the workspace, `l
 ## Preferred Invocation
 
 ```text
-Use $humanizer, $kush-resume-tailor, $kush-cover-letter, and $kush-app-workflow.
+Use $humanizer, $kush-resume-tailor, $kush-cover-letter, $cold-message-writer, and $kush-app-workflow.
 
 Company:
 <company>
@@ -29,7 +29,12 @@ Extra notes:
 <optional positioning, tone, referral context, constraints>
 ```
 
-When all four skills are invoked, keep using all four throughout the workflow: `$kush-app-workflow` owns sequencing and approval gates, `$kush-resume-tailor` owns resume judgment, `$kush-cover-letter` owns letter judgment, and `$humanizer` owns final prose cleanup for the cover letter, application-question answers, and LinkedIn messages. Do not use `$humanizer` to blur resume facts or technical precision.
+Required skill use:
+
+- Gate A must load and use `$kush-resume-tailor`, `$kush-cover-letter`, and `$humanizer`. `$humanizer` applies to cover letters and application-question answers, not resume bullets.
+- Gate B, LinkedIn notes, Twitter/X messages, DMs, founder messages, and referral asks must load and use `$cold-message-writer` plus `$humanizer`.
+- `$kush-app-workflow` owns sequencing and approval gates. `$kush-resume-tailor` owns resume judgment. `$kush-cover-letter` owns letter judgment. `$cold-message-writer` owns first-touch outreach judgment. `$humanizer` owns final prose cleanup without blurring facts or technical precision.
+- For LinkedIn connection requests, this workflow overrides `$cold-message-writer`'s generic "no note" LinkedIn advice. Draft notes, get approval, and send only after exact `LGTM SEND`.
 
 ## Workspace Contract
 
@@ -41,6 +46,9 @@ resume.tex
 Kushagra Bharti Cover Letter - General Template.md
 scripts/new-tailored-application.cmd
 scripts/build-application.cmd
+scripts/verify-application.cmd
+scripts/cleanup-application.cmd
+scripts/update-tracker.cmd
 Application_Tracker.xlsx
 03_Tailored_Applications/
 ```
@@ -85,6 +93,8 @@ On Windows, `llms.txt` may be a symlink whose file length appears as `0`. Do not
 ```powershell
 Get-Content -LiteralPath .\llms.txt
 ```
+
+Use PowerShell-safe commands and existing scripts. Do not use Bash heredocs in this Windows workspace.
 
 ### 2. Create Company Packet
 
@@ -211,8 +221,10 @@ If writing prompts are provided:
 3. Draft after resume and cover letter edits so positioning is consistent.
 4. Answer directly and truthfully in Kushagra's voice.
 5. Use the answer to address the exact prompt, not to repeat the cover letter.
-6. Respect word/character limits. When a max is provided, aim to land within 5% of it without adding filler. Include a quick count or note for the user.
-7. Keep structure flexible; use only enough organization to make the answer clear and easy to paste.
+6. Lead with what the project/product is and why it matters, then add the technical proof. Do not answer as a list of internals.
+7. Keep the reader experience strong: clear, project-first, readable to a founder or hiring manager, with enough technical detail to prove depth.
+8. Respect word/character limits. When a max is provided, aim to land within 5% of it without adding filler. Include a quick count or note for the user.
+9. Keep structure flexible; use only enough organization to make the answer clear and easy to paste.
 
 ### 7. Build
 
@@ -232,6 +244,12 @@ Expected outputs:
 If the build fails, inspect the LaTeX/Markdown error, fix only company-specific sources, and rebuild.
 
 ### 8. Verify
+
+Run:
+
+```powershell
+.\scripts\verify-application.cmd "<Company>"
+```
 
 Verify before Gate A:
 
@@ -286,6 +304,8 @@ Use a light scorecard while choosing: relevance to the role/team, natural conver
 
 ### 12. Draft Outreach
 
+Use `$cold-message-writer` and `$humanizer`.
+
 Return each target with:
 
 - Name.
@@ -318,6 +338,7 @@ More Guidance on Linkedin Message:
 - Ask for a quick conversation directly. For hiring targets, make the ask about roles at the company or where Kushagra may fit. For technical targets, make the ask about the specific technical topic or team work that made the target worth contacting.
 - Make it interesting enough that they want to reply, but not so long that it becomes a chore to read. 270-300 characters is a good target when possible.
 - Use high quality and engaging language, but avoid anything that sounds like a sales pitch or over-the-top praise. You want to come across as genuine and thoughtful, not like you're trying to impress them with fancy words.
+- Vary the notes. It is fine to signal hunger, motivation, willingness to learn fast, and real desire for the opportunity, but ground it in a specific reason the person/company is worth reaching out to.
 
 ### 13. Gate B Response
 
@@ -342,8 +363,8 @@ For each approved target:
 3. Inspect the modal before clicking. Stop if LinkedIn blocks, rate-limits, challenges, rejects the note, or shows an unexpected prompt.
 4. Always click the actual visible `Add a note` button. Never click any path that says or implies sending without a note, and do not reuse coordinates from another profile.
 5. If `Add a note` is visible but flaky, retry the same target safely using the direct invite surface or a verified forced click on `Add a note` only. Do not force-click `Send`.
-6. Focus the visible note textarea and type the normalized note character-by-character with keyboard events, preferably low-level keypresses. Do not use fill, paste, clipboard writes, or bulk text entry.
-7. Before sending, verify all of the following: the note box is visibly open, the full note is visibly present, the counter shows the expected `N/300`, the textarea value exactly matches the approved note, and the Send button is enabled.
+6. Focus the visible note textarea, preferably `textarea[name="message"]`, and type the normalized note character-by-character with keyboard events. Ignore hidden fields such as `g-recaptcha-response`. Do not use fill, paste, clipboard writes, or bulk text entry.
+7. Before sending, verify all of the following: the note box is visibly open, the full note is visibly present, the counter shows the expected `N/300`, the textarea value exactly matches the approved note, and the Send button is enabled. Prefer `button[aria-label="Send invitation"]` when selecting the final send button.
 8. Take one final look at the modal. If any check is ambiguous, stop and report instead of sending.
 9. Click only the verified `Send invitation` button.
 10. Report sent, skipped, and blocked requests.
@@ -364,13 +385,13 @@ Use only these role type values: `Internship`, `New Grad`, `Other`.
 
 Use only these status values: `need to apply`, `applied`, `OA`, `interview`, `rejected`, `offer`.
 
-Kushagra treats a completed tailored packet as submitted. So when the tailoring workflow is done, set `Status` to `applied` and set `Date Applied` to the actual submission date if known; otherwise use the date the tailored packet was finalized. Add only actually messaged LinkedIn profile URLs to `LinkedIn Reachouts`, keep `Notes` short, and mention if the tracker could not be updated.
+Kushagra treats a completed tailored packet as submitted. So when the tailoring workflow is done, set `Status` to `applied` and set `Date Applied` to the actual submission date if known; otherwise use the date the tailored packet was finalized. Add only actually messaged LinkedIn profile URLs to `LinkedIn Reachouts`, keep `Notes` short, and report whether the helper printed `tracker_action=inserted` or `tracker_action=updated`.
 
 ### 16. Cleanup And Final Commit
 
 After the tracker update:
 
-1. Delete build/render temp folders for the target company packet, including `.build` and verification render folders created by the workflow.
+1. Run `.\scripts\cleanup-application.cmd "<Company>"`.
 2. Run `git status`.
 3. Confirm root `resume.tex` and the root cover-letter template were not edited.
 4. Stage the target company packet and `Application_Tracker.xlsx`. Ignore unrelated untracked files unless they block the task.
