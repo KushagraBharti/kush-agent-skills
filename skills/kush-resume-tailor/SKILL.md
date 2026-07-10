@@ -1,172 +1,154 @@
 ---
 name: kush-resume-tailor
-description: Conservatively tailor Kushagra's company-specific LaTeX resume for a job posting while preserving truth, full one-page density, links, protected LaTeX/header/education/skills rules, fixed experience chronology, rare project swaps from llms.txt, and role-specific ATS keyword emphasis. Use when optimizing company-folder resume.tex files under 03_Tailored_Applications inside the internship/new-grad application workflow.
+description: Conservatively tailor Kushagra's company-specific LaTeX resume for internship or new-grad postings while preserving truth, the current Education/Experience/Projects/Research/Technical Skills structure, fixed experience and research entries, strong one-page density, links, supported ATS coverage, and selective project swaps. Use for resume.tex files under 03_Tailored_Applications.
 ---
 
 # Kush Resume Tailor
 
 ## Purpose
 
-Tailor one company-specific `resume.tex` for one target job. Kushagra's base resume is already strong and full; the goal is to make the existing page read slightly closer to the posting, not rebuild it.
+Make the current resume read closer to one target role without rebuilding it. Preserve its strength, structure, truth, and full one-page density. Prefer small, high-signal edits; use larger changes only when the role clearly rewards them.
 
-Default to minimal, targeted edits: keyword emphasis, clearer role alignment, and small bullet rewrites. Do not shorten the resume into a sparse page, restructure the resume, or aggressively swap content just because a posting has a few different keywords.
-
-Use this skill inside `$kush-app-workflow` or on its own. If `$humanizer` is active, do not use it on the resume unless the user explicitly asks; resume bullets should stay precise, dense, and technical.
+Do not run `$humanizer` on resume bullets unless the user explicitly asks. Resume language should remain compact, technical, and precise.
 
 ## Required Context
 
 Read:
 
-- Job posting text or URL. Use pasted text directly, or read the exact URL when only a link is provided.
-- `llms.txt` for current profile context, project inventory, metrics, links, and supported skills.
-- Root `resume.tex` for baseline context only.
-- Company-specific `03_Tailored_Applications/<Company>/resume.tex` for edits.
+- User-provided posting text, or the exact posting URL when only a link is supplied.
+- Root `resume.tex` as the current factual and structural baseline.
+- `llms.txt` for expanded project inventory, supported technologies, metrics, and links.
+- The company-specific `03_Tailored_Applications/<Company>/resume.tex` to edit.
+- Explicit user notes.
 
-If the user supplied pasted posting/application text, treat it as authoritative. If they supplied only a URL, use the exact URL content. Do not use web search to reconstruct job requirements.
+Treat pasted posting text as authoritative. Do not reconstruct job requirements through web search. When factual sources conflict, use the current root resume as the latest authority.
 
-Hard rules:
+## Hard Rules
 
-- Never edit root `resume.tex`. Only edit the company-specific copy.
-- Never invent experience, metrics, titles, dates, tools, awards, publications, GPA, certifications, company names, or links.
-- Never add claims that appear only in the job description.
-- Keep the resume truthful, dense, and one page.
-- Strong framing is acceptable when it is clearly grounded in `llms.txt` or the base resume.
+- Never edit root `resume.tex`; edit only the company-specific copy.
+- Never invent experience, responsibilities, metrics, titles, dates, tools, awards, publications, education, companies, or links.
+- Never add a claim merely because the posting requests it.
+- Preserve whether work is completed, active, newly started, or upcoming; do not change factual tense or imply unsupported accomplishments.
+- Preserve the LaTeX preamble, commands, header, contact block, spacing system, section structure, and link syntax.
+- Keep the resume truthful, interview-defensible, dense, and exactly one page.
 
-## Pre-Edit Strategy
-
-Before editing, build an internal strategy:
+The canonical section order is:
 
 ```text
-role type -> top requirements -> supported evidence -> minimal resume edit
+Education -> Experience -> Projects -> Research -> Technical Skills
 ```
 
-Use the strategy to decide what to touch. If the current resume already covers the role well, make only the smallest useful changes.
+## Strategy
 
-Balance ATS fit with interview defensibility. A change is not better just because it adds a keyword; the resulting resume should still feel strong, explainable, and honest in an interview.
+Before editing, build a compact map:
 
-Prioritize:
+```text
+role type -> top requirements -> supported evidence -> smallest strong edit
+```
 
-1. Required languages, frameworks, tools, and domains.
-2. Core role nouns and responsibilities.
-3. Evidence of impact: metrics, shipped systems, research results, tests, users, production context.
-4. Soft requirements only when concrete work demonstrates them.
+Prioritize required technologies and domains, core responsibilities, and concrete evidence of impact. Prefer strong evidence over shallow keyword matching. If the current resume already fits, change very little. Report unsupported requirements instead of forcing them into the page.
 
-Unsupported requirements belong in the final summary, not in the resume.
+Position the resume around what Kushagra has done and can prove:
 
-## Common Rules
+- Never add negative framing, qualification disclaimers, missing-skill callouts, or language that makes Kushagra sound less capable.
+- Do not write `while I do not have X`, `although I have not used X`, or any equivalent caveat. Omit the unsupported requirement and report it only in the private ATS summary.
+- Use strong supported framing when it improves clarity, but do not inflate scope, ownership, seniority, or results.
+- Prioritize evidence in this order: required technical/domain fit, role responsibilities, measured impact or shipped work, then concrete soft-skill evidence.
+- Keep edits consistent with the resume's existing voice. The result should look intentionally tailored, not reconstructed around the posting.
 
-- Let the job description drive small edits, but assume most postings need only minimal keyword and emphasis changes.
-- Build a compact ATS map before editing: `requirement -> supported evidence -> minimal edit`.
-- Preserve the resume's density. Do not delete bullets or shrink the resume into a visibly underfilled page just because some bullets are less directly relevant.
-- Do not edit the LaTeX preamble, custom commands, header/contact block, spacing commands, section structure, or link syntax.
-- Add exact job keywords when supported by `llms.txt`, root resume, company-specific resume, or user notes.
-- Keep the resume one full page. If it spills or becomes underfilled, fix content first and preserve density before touching formatting.
+## Education
 
-## Education Rules
+- Keep the default internship graduation date as `Expected Dec 2027`.
+- For a new-grad role, change only the graduation date to `Expected May 2027`.
+- Do not introduce enrollment-start dates.
+- Preserve the school, degree, minor, certificate, coursework, and location unless the user explicitly requests a change.
 
-- The only normal edit above Experience is the Education date.
-- For internship roles, set Education to `August 2023 -- December 2027`.
-- For new-grad roles, set Education to `August 2023 -- May 2027`.
-- Do not leave the base `May/Dec 2027` placeholder.
-- Do not change the school, degree, minor, certificate, coursework, or location unless the user explicitly asks.
+## Experience and Research
 
-## Technical Skills Rules
+Apply the same protections to both sections:
 
-- Treat Technical Skills as no-touch by default.
-- Only add one or two supported skills if the posting explicitly values them, the evidence exists in `llms.txt` or the resume, and the addition does not require removing or reordering existing skills.
-- Never remove, reorder, rename, or broadly tune skills for ATS.
+- Keep every entry in its current section. Never move Research into Experience or Experience into Research.
+- Do not remove, swap, or reorder entries. Preserve chronology.
+- Preserve organization, title, date range, location, and link.
+- Preserve bullet counts by default and rewrite bullets in place.
+- Preserve strong metrics, scope, and technical detail.
+- Foreground supported role language without weakening the original evidence.
+- Do not broadly compress lower-fit work; prefer a small emphasis change or leave it alone.
+- Avoid duplicating the same proof across multiple bullets or sections.
 
-## Experience Rules
+## Projects
 
-- Do not swap, remove, or reorder experiences. Experience chronology is fixed.
-- Preserve each experience's title, employer, date range, location, and link.
-- Do not change the number of experience bullets by default. Rewrite bullets in place.
-- Rewrites should preserve high quality and density, foreground supported keywords, and maintain ATS coverage.
-- Rewrites should be clear and maintain the same voice and writing style as the rest of the resume.
-- Do not broadly compress experience content. If a bullet is lower-fit, usually rewrite it to foreground supported job language instead of cutting it.
+Projects are the primary flexible content surface.
 
-## Project Rules
-
-- Preserve project links when known; never invent missing links.
+- Preserve links; never invent a missing URL.
 - Keep project-heading right-side date/status arguments empty.
-- Preserve project order and bullet count unless a rare project swap truly requires adjustment.
-- Swap a project only in rare, high-signal cases where the posting has a clear domain match that the current projects miss, such as RL, LLM agents, computer vision, web-dev, quant, backend systems, etc.
-- Treat swaps as rare judgment calls. The existing three projects are already strong contenders.
-- Project swaps are allowed when the role clearly rewards it, but compare project strength, role fit, resume balance, and interview defensibility first.
-- When a rare swap is justified, either swap a project cleanly or reduce existing project content to make space for the new one. Either way, preserve a full, dense page.
-- Replace or shorten the lowest-fit current project. Do not append extra projects.
-- Choose based on the role, the posting, and the strongest evidence in `llms.txt`, not a fixed project matrix.
-- Use project links only when present in `llms.txt`, root resume, company-specific resume, or user input. If the best project lacks a known link, include it without inventing a URL and flag the missing link in the summary.
-- Use bold sparingly. Bold only high-signal technical or product claims that genuinely deserve emphasis.
+- Preserve the current projects, order, and bullet counts by default.
+- Swap or reorder projects when a materially stronger, supported role match justifies it.
+- Compare role fit, project strength, interview depth, ATS value, and overall resume balance.
+- Prefer one clean swap over appending another project or weakening several strong projects.
+- Replace or shorten the lowest-value project for the target role; never remove Experience or Research to make project changes fit.
+- Use project details and links only when supported by the root resume, `llms.txt`, company resume, or user notes.
+- If a selected project has no verified link, include it without inventing one and flag the missing link in the summary.
+- Use bold sparingly for genuinely high-signal technical or product claims.
+
+## Technical Skills
+
+Use Technical Skills as an active ATS index, not a frozen section.
+
+- Extract exact technologies, platforms, methods, and domain terms from the posting.
+- Add supported high-value keywords that improve ATS coverage.
+- Regroup, reorder, or rename categories when it makes the supported match clearer.
+- Prefer expanding coverage; remove or replace low-value terms only when needed for one-page fit or clarity.
+- Keep categories readable and avoid repetitive keyword dumping.
+- Require evidence in the root resume, `llms.txt`, company resume, or user notes. Never add unsupported tools.
+- Preserve the section's current bottom placement.
 
 ## Bullet Standard
 
-Prefer this shape:
+Prefer:
 
 ```text
-Action + technical work + concrete outcome/scale + tool/system/context
+action + technical work + outcome or scale + system context
 ```
 
-Good bullets are specific enough to be credible and compact enough to fit.
-
-Use the Google X-Y-Z formula as a light quality check, especially when rewriting an existing bullet:
+Use Google X-Y-Z only as a quality check:
 
 ```text
 Accomplished [X] as measured by [Y], by doing [Z]
 ```
 
-Interpret it as:
-
-- `X`: the outcome, improvement, shipped system, or research/product impact.
-- `Y`: the metric, scale, benchmark, user count, latency/cost/result, or other proof.
-- `Z`: the technical method, tool, architecture, or implementation choice that drove the result.
-
-Most existing bullets already roughly follow this pattern. Do not rewrite strong bullets just to make the formula explicit. Use it to preserve outcome, proof, and method when making small role-specific edits. Again, rewriting should be the exception, not the default. The resume should still read like the original, just slightly tailored. You can just insert and reword keywords in place without fully restructuring a bullet.
+Interpret `X` as the outcome, `Y` as real proof or scale, and `Z` as the technical method. Not every strong bullet needs all three explicitly.
 
 When rewriting:
 
-- Preserve strong metrics and concrete outcomes. Do not weaken a bullet by adding nonsensical metrics; the metrics already there are there for a reason.
-- Prefer technical nouns over filler adjectives.
-- Avoid generic ATS stuffing.
-- Avoid weakening a strong bullet just to insert one keyword.
-- Avoid duplicate evidence across bullets unless the role genuinely rewards repeated emphasis.
-- Avoid over-explaining product ideas in abstract language. Keep bullets concrete and normal.
-
-## Final Checks
-
-Before returning control:
-
-- The resume should still look like a full, dense, high-signal one-page resume.
-- The edit should read as targeted tailoring, not a reconstructed resume.
-- Unsupported requirements should be reported, not forced into the resume.
-- Root `resume.tex` should remain untouched.
-- Technical Skills should be unchanged unless the narrow addition rule was intentionally used.
-- Experience chronology, titles, employers, dates, locations, and links should be unchanged.
-- Project headings should still have empty right-side date/status arguments.
+- Do not rewrite a strong bullet merely to force the formula or insert one keyword.
+- Preserve real metrics and outcomes; never manufacture, stretch, or add nonsensical measurements.
+- Prefer technical nouns and concrete actions over filler adjectives or vague ownership claims.
+- Avoid generic ATS stuffing, repeated keywords, and duplicate evidence across bullets.
+- Do not lead with a tool list when the system, hard problem, or result is the stronger story.
+- Keep product and research ideas concrete; avoid abstract manifesto language and over-explanation.
 
 ## Verification
 
-After edits, the workflow should:
+After editing:
 
-- Build the PDF.
-- Confirm page count is one.
-- Render or visually inspect the PDF.
-- Check for clipping, broken links, missing sections, bad line wraps, wrong company, wrong role, and placeholder text.
-- Check that the page is filled appropriately; if the resume wastes major vertical space, restore high-signal supported content.
-- Extract text when practical and confirm the most important job keywords are present.
+1. Build the PDF.
+2. Confirm it is exactly one page and visually full.
+3. Inspect for clipping, broken links, missing sections, poor wraps, incorrect company/role language, or placeholders.
+4. Extract text when practical and confirm the most important supported ATS terms survived rendering.
+5. Confirm root `resume.tex` is unchanged.
+6. Confirm Experience and Research entries, chronology, identity fields, and links remain intact.
 
-If using this skill standalone, run the same verification when practical. If build or visual verification cannot run, state exactly what remains unverified.
+If verification cannot run, state exactly what remains unverified.
 
 ## Output
 
 Summarize:
 
-- Key resume changes.
-- Keywords added or emphasized.
-- Compact ATS coverage: covered, partially covered, and unsupported requirements.
-- Any Technical Skills additions and their evidence.
-- Project swaps, shortened projects, and link assumptions.
-- Important unsupported requirements.
-- Build/page verification status.
+- Key edits and emphasized keywords.
+- Covered, partial, and unsupported requirements.
+- Technical Skills additions or restructuring and their evidence.
+- Project swaps, reordering, shortening, and link assumptions.
+- Build, page-count, and visual-verification status.
 
-If used inside `$kush-app-workflow`, return control so it can build, verify, and present Gate A.
+When used inside `$kush-app-workflow`, return control for Gate A.

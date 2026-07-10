@@ -1,4 +1,4 @@
 interface:
   display_name: "Kush App Workflow"
-  short_description: "Build and verify tailored applications"
-  default_prompt: "Use $humanizer, $kush-resume-tailor, $kush-cover-letter, and $kush-app-workflow to tailor my application packet, answer any application questions, build/verify the PDFs, and prepare LinkedIn outreach after approval."
+  short_description: "Run complete tailored application workflows"
+  default_prompt: "Use $humanizer, $kush-resume-tailor, $kush-cover-letter, $cold-message-writer, and $kush-app-workflow to complete my internship or new-grad application workflow with both approval gates."
