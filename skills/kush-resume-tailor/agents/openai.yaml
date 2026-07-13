@@ -1,4 +1,4 @@
 interface:
   display_name: "Kush Resume Tailor"
-  short_description: "Tailor a truthful, ATS-strong resume"
-  default_prompt: "Use $kush-resume-tailor to tailor my company-specific resume.tex to this internship or new-grad posting while preserving its current structure, truth, links, and full one-page density."
+  short_description: "Tailor a truthful, one-page resume"
+  default_prompt: "Use $kush-resume-tailor to conservatively tailor my company-specific resume.tex for this internship or new-grad posting while preserving its truth, links, structure, and full one-page density."

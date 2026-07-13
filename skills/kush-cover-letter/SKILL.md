@@ -1,127 +1,96 @@
 ---
 name: kush-cover-letter
-description: Write or revise Kushagra's company-specific cover-letter.md for an internship or new-grad role using the exact posting, current resume, llms.txt, primary-source company research, and fixed one-page template structure. Use for truthful, specific, technically credible cover letters under 03_Tailored_Applications that add story and fit without repeating the resume or application answers.
+description: Write or revise Kushagra's company-specific cover-letter.md for a target job using the current resume, llms.txt, company research, and job posting. Use when tailoring company-folder cover-letter.md files under 03_Tailored_Applications for specific company fit, concise human voice, truthful experience mapping, application-question consistency, signature links, and one-page PDF readiness.
 ---
 
 # Kush Cover Letter
 
 ## Purpose
 
-Create one substantive, company-specific cover letter that sounds direct, ambitious, technical, and human. Follow the approved template structure, add to the resume instead of paraphrasing it, and fill one clean PDF page without padding.
+Create a specific, concise cover letter for one company and role. The letter should sound like Kushagra: direct, ambitious, technical, and human without sounding dramatic or generic. Use the job description, company research, current resume, and `llms.txt` with judgment while preserving the root template's basic shape unless the user asks otherwise.
 
-Use `$humanizer` only after the factual draft is complete. It may improve wording and rhythm but must not reorganize the approved structure.
+Use this skill inside `$kush-app-workflow` or on its own. If `$humanizer` is active, use it only after the factual draft is complete.
 
 ## Required Context
 
 Read:
 
-- User-provided posting text, or the exact posting URL when only a link is supplied.
-- Root `resume.tex` as the latest authority for resume facts.
-- `llms.txt` for expanded projects, motivations, voice, links, and supported details.
-- Root `Kushagra Bharti Cover Letter - General Template.md` for structure only.
-- The company-specific `cover-letter.md` to edit.
-- Application questions, so the letter does not duplicate their answers.
-- Enough primary-source company, product, and team research to be specific.
+- Job posting text or exact URL. Use user-provided posting/application text as authoritative.
+- `llms.txt` for current profile context, projects, motivation, links, and voice.
+- Root cover letter template for baseline structure only.
+- Company-specific `03_Tailored_Applications/<Company>/cover-letter.md` for edits.
+- Company/product/team research from primary sources when available.
+- Application questions, if provided, so the letter does not duplicate those answers.
 
-Treat pasted posting and application text as authoritative. Never invent company facts, personal connections, referrals, experience, metrics, technologies, or links.
+When factual sources conflict, use the current root resume as the latest authority.
 
-Hard rules:
+Hard rule: never edit the root cover letter template. Only edit the company-specific copy.
 
-- Never edit the root cover-letter template; edit only the company-specific `cover-letter.md`.
-- Use exact company and role names and replace every placeholder or template note.
-- Keep every claim verifiable from the current resume, `llms.txt`, posting, primary research, or user notes.
-- Never submit, send, or publish the letter.
+Template rule: the company-specific `cover-letter.md` starts from `Kushagra Bharti Cover Letter - General Template.md`. Preserve that template's overall structure: direct greeting, short opening, evidence bullets or compact evidence section, company-fit paragraph, ownership/personality paragraph, close, and linked signature. Tailor the placeholders; do not replace the format with a generic cover-letter essay unless the user explicitly asks.
 
-## Fixed Structure
+## Goals
 
-Follow this order:
+The letter should:
 
-1. Date and recipient block.
-2. Direct greeting.
-3. Opening: exact role, company, Kushagra's relevant identity, and the clearest company-specific thesis.
-4. `A few parts of my work line up well:`
-5. Three concise evidence bullets.
-6. Company-fit paragraph grounded in real product, team, or technical context.
-7. Ownership and working-style paragraph grounded in evidence.
-8. Direct close.
-9. Linked signature.
+- Connect 2-3 strongest items across Experience, Research, and Projects to the role.
+- Add to the resume instead of repeating it. Use the letter for motivation, product taste, systems judgment, company fit, or complementary projects.
+- Use one or two concrete company/team/product details.
+- Show motivation and work ethic through evidence, not self-labels.
+- Let personality through with direct, specific lines about ownership, learning speed, taste, or high standards when supported by context.
+- Stay brief while still having substance.
+- Fit cleanly on one PDF page.
 
-Keep this architecture stable. Tighten wording within sections when needed, but do not let `$humanizer` merge, reorder, remove, or invent structural parts.
-
-The final Markdown must begin with the date, not a Markdown title. Remove the template instruction, checklist, placeholders, drafting notes, and optional guidance before building.
-
-## Evidence Selection
-
-- Choose three high-signal evidence items across Experience, Research, and Projects.
-- Choose them from the packet thesis and the job's strongest requirements, not automatically by recency or keyword count.
-- Map each item to a distinct role requirement; do not repeat the same proof three ways. A strong set usually combines direct role proof, production or research depth, and complementary range.
-- Prefer evidence with clear ownership, a hard problem, a shipped or measured result, or a useful judgment call.
-- Explain what the system or project is and why the work matters before stacking implementation details.
-- Use technical details and metrics as proof, not as a dense inventory of tools.
-- Use the letter to explain motivation, product taste, systems judgment, ownership, or why the evidence matters.
-- Do not convert resume bullets into prose unless the added context changes the reader's understanding.
-- Preserve factual state and tense for completed, active, newly started, or upcoming work.
-- Keep the letter distinct from application-question answers.
-
-Before drafting, assign each artifact a role so the letter adds information instead of echoing the packet:
-
-```text
-resume = dense proof
-cover letter = story, judgment, motivation, and fit
-application answers = exact prompt response
-```
-
-## Company Fit
-
-- Use one or two concrete, verified company, product, team, or technical details.
-- Explain why those details connect to Kushagra's actual work and interests.
-- Translate company values into observed behavior and evidence; do not repeat slogans.
-- When values matter, use `value -> behavior the team rewards -> concrete evidence from Kushagra's work`.
-
-## Positive Positioning
-
-- Write from strength. Never volunteer weaknesses, gaps, doubts, missing qualifications, or reasons the company might reject Kushagra.
-- Omit unsupported technologies entirely. Never write `while I do not have experience with X`, `although I have not used X`, `I may lack X`, or any equivalent deficiency disclaimer.
-- Do not ask the reader to overlook a gap or frame adjacent experience as a consolation prize. Use the strongest truthful adjacent evidence without the caveat.
-- Never apologize for being a student, call Kushagra inexperienced or `still early`, or use self-diminishing phrases such as `despite my limited experience`.
-- Do not invent evidence to avoid a gap. Keep unsupported requirements outside the letter and report them privately in the workflow summary.
-- Avoid fake humility and excessive deference. Interest in learning should reinforce demonstrated ability, not replace it.
+Target one full, balanced PDF page and never less than roughly 80% of a page. Usually aim for 350-450 words, but prioritize a strong one-page result over an exact word count.
 
 ## Voice
 
-Sound direct, technically credible, natural, specific, and ambitious without sounding dramatic or needy. Let personality show through concrete choices, hard problems, ownership, learning speed, taste, and standards.
-
 Use:
 
-- Straightforward sentences and short paragraphs with one clear point each.
-- Concrete systems, decisions, outcomes, and company details over abstract claims.
-- Confident but normal language with varied sentence rhythm.
-- Plain explanations that a technical hiring manager or founder can understand quickly.
+- Straightforward, specific sentences.
+- Short paragraphs with one clear point each.
+- Concrete examples over abstract claims.
+- Confident but normal language.
 
 Avoid:
 
-- Generic admiration, mission worship, company-value slogans, and corporate filler.
-- AI-generated cadence, polished-template language, inflated transitions, and rhetorical padding.
-- Press-release language, README prose, generic `AI for X` framing, and abstract product manifestos.
-- Long lists of tools or technical internals without a clear project, problem, or result.
-- Self-labels such as `hardworking`, `passionate`, `innovative`, or `uniquely positioned` when evidence can prove the point.
-- Fake hype, fake humility, grand claims, and overly flattering language.
-- Repeating the resume, application answers, company website, or the same sentence structure across every paragraph.
-- Generic conclusions that could be sent to any company.
-- Generic openings such as `I am writing to apply` when a sharper thesis is available.
+- Corny lines, grand mission language, and over-polished corporate tone.
+- Generic admiration such as "I am inspired by your commitment to innovation."
+- Repeating company values as slogans.
+- Saying "hardworking" directly when an example can prove it.
 
-Each paragraph should answer either `why this role/company` or `why this evidence matters`.
+When using company values, translate them into behavior:
 
-## Length and Page
+```text
+Value -> what the team seems to reward -> concrete evidence from Kushagra's work
+```
 
-- Optimize for one full, balanced PDF page rather than a word quota.
-- Keep enough substance to function as a real cover letter, not a short message.
-- Remove repetition and filler before compressing valuable evidence.
-- Never shrink the content into a visibly sparse page merely to be concise.
+## Structure
+
+Default shape should follow the root template:
+
+```text
+Date / recipient block
+
+Greeting.
+
+Opening: role, company, and the clearest specific reason this role fits.
+
+Evidence section: 2-3 bullets or compact paragraphs mapping real work to the role.
+
+Company fit: plain, specific reason this company/team is interesting.
+
+Personality/ownership: concise line about how Kushagra works, grounded in evidence.
+
+Close: concise interest.
+
+Signature block
+```
+
+Do not force all sections if a shorter letter is stronger, but keep the root template's recognizable shape when possible.
 
 ## Signature
 
-Use unless the user requests otherwise:
+Use this default signature unless the user asks otherwise:
 
 ```markdown
 Sincerely,
@@ -131,25 +100,51 @@ The University of Texas at Dallas
 [LinkedIn](https://www.linkedin.com/in/kushagra-bharti/) | [Personal Site](https://www.kushagrabharti.com) | [GitHub](https://github.com/KushagraBharti/)
 ```
 
-Keep signature lines consecutive and verify clean rendering without awkward wrapping.
+In the actual `cover-letter.md`, keep signature lines consecutive with no blank lines inside the signature block. Use Markdown links instead of raw long URLs when supported by the renderer. Verify the rendered PDF does not wrap the signature awkwardly.
+
+## Writing Rules
+
+Do:
+
+- Replace all placeholders and template notes.
+- Remove the template title, instructional blockquote, Quick Tailoring Checklist, placeholders, optional notes, and drafting guidance from the final company-specific Markdown before building.
+- Use exact role and company names.
+- Match the job's strongest requirements to real work.
+- Keep claims verifiable from `llms.txt`, resume, or user-provided context.
+- Keep the letter distinct from application-question answers.
+- Keep the letter distinct from the resume. Do not turn resume bullets into paragraphs unless the added context changes the reader's understanding.
+- Before finalizing, make sure each paragraph answers either "why this role/company" or "why this evidence matters."
+- Tighten aggressively if it spills to a second page.
+
+Do not:
+
+- Invent company facts, referrals, personal connections, experience, metrics, or links.
+- Mention values/products unless researched or user-provided.
+- If the posting includes a technology Kushagra does not have supported experience with, do not mention that technology at all.
+- Do not write disclaimers like "while I do not have experience with X." Leave unsupported technologies out of the letter.
+- Do not use abstract product-manifesto language when a plain explanation is stronger.
+- Apologize for being a student or intern candidate.
+- Use generic openings like "I am writing to apply" when a sharper opening is possible.
+- Submit or send anything.
 
 ## Humanizer Pass
 
-After drafting:
+If `$humanizer` is active:
 
-1. Remove inflated wording, filler, clichés, and AI-ish rhythm.
-2. Improve sentence flow and make the voice sound natural and direct.
-3. Preserve facts, technical meaning, evidence selection, links, paragraph roles, and the fixed structure.
-4. Keep the final artifact substantive and one-page ready.
+1. Draft factually first.
+2. Remove inflated wording, filler transitions, cliches, and AI-ish rhythm.
+3. Preserve company names, dates, metrics, technical terms, and links.
+4. Rewrite to sound natural, have no corny lines, be concise, professional but human, and maintain the same structure.
+5. Keep the final letter one-page ready.
 
-## Verification and Output
+## Output
 
-Before returning:
+Summarize:
 
-- Confirm every placeholder and template note is gone.
-- Confirm exact company and role names.
-- Confirm all claims against the resume, `llms.txt`, posting, research, or user notes.
-- Build and visually inspect the one-page PDF.
-- Check spacing, bullet balance, signature wrapping, links, and page fill.
+- Company details used.
+- Experiences emphasized.
+- Any assumptions the user should verify.
+- Signature/link handling.
+- Build/page verification status.
 
-Summarize the company details used, evidence selected, assumptions requiring review, signature handling, and build/page verification. When used inside `$kush-app-workflow`, return control for Gate A.
+If used inside `$kush-app-workflow`, return control so it can build, verify, and present Gate A.

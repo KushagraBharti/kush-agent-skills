@@ -1,4 +1,4 @@
 interface:
   display_name: "Kush Cover Letter"
-  short_description: "Write structured, one-page tailored letters"
-  default_prompt: "Use $kush-cover-letter to write my company-specific one-page cover letter for this internship or new-grad posting with the fixed structure, truthful evidence, company-specific fit, and linked signature."
+  short_description: "Write specific one-page cover letters"
+  default_prompt: "Use $kush-cover-letter to tailor my company-specific cover-letter.md for this internship or new-grad posting with truthful evidence, specific company fit, natural writing, and the standard linked signature."
