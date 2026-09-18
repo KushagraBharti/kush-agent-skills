@@ -1,0 +1,4 @@
+interface:
+  display_name: "Kush Application Writer"
+  short_description: "Write application answers and required letters"
+  default_prompt: "Use $kush-application-writer to draft answers for these application prompts."

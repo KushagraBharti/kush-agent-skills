@@ -1,0 +1,4 @@
+interface:
+  display_name: "Kush Browser Apply"
+  short_description: "Fill forms and submit reviewed applications"
+  default_prompt: "Use $kush-browser-apply to fill this application and publish it for review without submitting."
