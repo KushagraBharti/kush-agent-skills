@@ -14,7 +14,7 @@ Review happens at [employment.kushagrabharti.com](https://employment.kushagrabha
 
 ## Install
 
-From the Internship Applications workspace on macOS or Windows:
+Install from the Internship Applications workspace on macOS or Windows. Skill installation is cross-platform; the workspace's local application helpers require macOS and Python 3.14.
 
 ```sh
 npx skills add https://github.com/KushagraBharti/kush-agent-skills --skill '*' -y --copy
@@ -38,4 +38,4 @@ Prepare these jobs for dashboard review without submitting:
 
 ## Maintain
 
-Keep the skills short. Validate each folder with the skill-creator's `scripts/quick_validate.py`, commit and push this repo, then refresh the project-local installation.
+The `skills/` directory in this repository is the source of truth. The Internship Applications workspace's `.agents/skills/` directories are installed copies. Make future edits here, validate each folder with the skill-creator's `scripts/quick_validate.py`, commit and push this repository, then refresh the installed copies. If a workspace copy is edited first, bring those changes back here before refreshing it. Keep the skills short.
